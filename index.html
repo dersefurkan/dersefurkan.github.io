@@ -1,49 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Furkan Derse — Attack-Test &amp; Security Review Engineer</title>
-<style>
-  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 760px; margin: 48px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.55; }
-  h1 { font-size: 1.6rem; margin-bottom: 0.2em; }
-  h2 { font-size: 1.15rem; margin-top: 1.8em; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
-  .tag { color: #444; font-size: 1.05rem; }
-  code { background: #f3f3f3; padding: 1px 5px; border-radius: 4px; }
-  a { color: #0b5fff; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  ul { padding-left: 1.3em; }
-  .contact { margin-top: 2em; padding: 14px 18px; background: #f7f9ff; border: 1px solid #dde5ff; border-radius: 8px; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Furkan Derse — Security review for DeFi and zkVM</title>
+  <meta name="description" content="Independent security review. Deliverable is a Foundry repo with green forge test — not a PDF. Invariant suites, fork tests, zkVM guest/verifier binding.">
+  <meta property="og:title" content="Furkan Derse — Security review">
+  <meta property="og:description" content="Time-boxed security review for DeFi protocols and zkVM integrations. Repo deliverable, not a PDF.">
+  <meta property="og:url" content="https://dersefurkan.github.io">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top">
+        <span class="mark">FD</span>
+        dersefurkan
+      </a>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
 
-<h1>Furkan Derse</h1>
-<p class="tag">Independent attack-test and security review engineer for DeFi protocols.<br>
-<strong>The deliverable is a repo with green <code>forge test</code> output, not a PDF.</strong></p>
+    <header class="hero" id="top">
+      <div>
+        <div class="kicker">Independent security review</div>
+        <h1>The report is a test suite.</h1>
+        <p class="lede">
+          I review DeFi protocols and zkVM integrations.
+          The deliverable is a private Foundry repo with green
+          <strong><code>forge test</code></strong> — not a PDF, not an audit stamp.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Email for a scope call</a>
+          <a class="btn" href="https://github.com/dersefurkan">GitHub</a>
+          <a class="btn" href="https://t.me/FURY_Fn">Telegram</a>
+        </div>
+      </div>
+      <div class="term" aria-hidden="true">
+        <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <pre><span class="dim">$</span> forge test
+<span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()
+<span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
+<span class="ok">[PASS]</span> test_tampered_journal_reverts()
+<span class="ok">[PASS]</span> test_wrong_image_id_reverts()
 
-<h2>Services</h2>
-<ul>
-  <li><strong>Foundry invariant suites</strong> — stateful fuzzing harnesses around the identity that actually moves money</li>
-  <li><strong>Mainnet fork fuzz</strong> — fork tests against live deployments or pinned commits, adversarial call sequences</li>
-  <li><strong>Upgrade / diff review</strong> — a focused pass over what changed</li>
-  <li><strong>Adversarial test packs</strong> — "how would you drain this vault" as runnable failing-then-fixed tests</li>
-  <li><strong>zkVM / coprocessor boundary</strong> — guest program + on-chain verifier binding (image ID pinning, journal commitment, replay resistance)</li>
-</ul>
-<p>Engagement terms and process: <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a></p>
+<span class="dim">Suite result: ok. 13 passed; 0 failed.</span></pre>
+      </div>
+    </header>
 
-<h2>Public work</h2>
-<ul>
-  <li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a> — money-moving identity bug: directed PoC + conservation invariants</li>
-  <li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">pool-invariant-suite-demo</a> — handler-based invariant suite + killed-bug showcase + mainnet fork fuzz</li>
-  <li><a href="https://github.com/dersefurkan/risc0-onchain-verify-demo">risc0-onchain-verify-demo</a> — zkVM seam end-to-end: Rust guest → Groth16 receipt → Solidity verifier</li>
-  <li><a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">zkvm-guest-bug-notes</a> — curated map of zkVM guest-program and onchain-binding bug classes</li>
-</ul>
+    <section id="work">
+      <h2>Public samples</h2>
+      <p class="note">Teaching contracts and notes. Not findings against a live protocol.</p>
+      <div class="grid cards-2 work" style="margin-top:18px">
+        <a class="card" href="https://github.com/dersefurkan/split-ledger-vault-demo">
+          <div class="tag">Vault identity</div>
+          <div class="name">split-ledger-vault-demo</div>
+          <h3>One deposit, two claims</h3>
+          <p>Directed PoC: 100 in, 200 out. Same conservation invariants hold on the patched vault.</p>
+        </a>
+        <a class="card" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
+          <div class="tag">Pool math</div>
+          <div class="name">pool-invariant-suite-demo</div>
+          <h3>Share inflation, caught by the suite</h3>
+          <p>Handler-based invariants on a lending pool. First-depositor inflation is a failing-then-fixed pair.</p>
+        </a>
+        <a class="card" href="https://github.com/dersefurkan/risc0-onchain-verify-demo">
+          <div class="tag">zkVM seam</div>
+          <div class="name">risc0-onchain-verify-demo</div>
+          <h3>Guest → Groth16 → Solidity</h3>
+          <p>A real receipt verifies on a local EVM. Tampered journal and wrong image ID revert.</p>
+        </a>
+        <a class="card" href="https://github.com/dersefurkan/zkvm-guest-bug-notes">
+          <div class="tag">Notes</div>
+          <div class="name">zkvm-guest-bug-notes</div>
+          <h3>Ten guest / binding classes</h3>
+          <p>Public references only. Host/guest trust, journal binding, vk allowlists, replay.</p>
+        </a>
+      </div>
+    </section>
 
-<div class="contact">
-<strong>Contact:</strong> Telegram <a href="https://t.me/FURY_Fn">@FURY_Fn</a> · dersefurkan32@gmail.com — replies within 24 hours.<br>
-Free 30-minute scope call; fixed quote within 24 hours after it.
-</div>
+    <section id="services">
+      <h2>What an engagement is</h2>
+      <div class="grid cards-3">
+        <div class="card">
+          <div class="tag">Sprint</div>
+          <h3>1–2 week review</h3>
+          <p>One vault, matching engine, upgrade diff, or zkVM guest plus verifier. Fixed quote after a 30-minute scope call.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Retainer</div>
+          <h3>Weekly subscription</h3>
+          <p>Diff review, new invariant and fork tests, a weekly call. Cancel at month end.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Included</div>
+          <h3>Fix review</h3>
+          <p>Findings ship as failing tests. When you patch, I flip them to passing — no extra fee, 30 days.</p>
+        </div>
+      </div>
+      <p style="margin-top:18px;color:var(--muted);font-size:15px">
+        Full terms: <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.
+        This is a time-boxed <strong style="color:var(--text);font-weight:500">security review</strong>, not a security audit and not a guarantee.
+      </p>
+    </section>
 
+    <section id="process">
+      <h2>Process</h2>
+      <ol class="steps">
+        <li><strong>Scope call</strong> — 30 minutes, free. Target, constraints, authorized surface.</li>
+        <li><strong>Fixed quote</strong> — within 24 hours of the call.</li>
+        <li><strong>Repo delivery</strong> — private Foundry handoff. <code>forge test</code> is the report.</li>
+        <li><strong>Walkthrough</strong> — properties and findings live.</li>
+        <li><strong>Fix window</strong> — 30 days included, per finding.</li>
+      </ol>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="lede" style="font-size:18px">
+        <a href="mailto:dersefurkan32@gmail.com">dersefurkan32@gmail.com</a><br>
+        Telegram <a href="https://t.me/FURY_Fn">@FURY_Fn</a> ·
+        <a href="https://github.com/dersefurkan">github.com/dersefurkan</a>
+      </p>
+      <p class="note">Replies within 24 hours. Authorized work only — I do not test systems I am not contracted to review.</p>
+    </section>
+
+    <footer>
+      <span>Furkan Derse · independent security review</span>
+      <span>Not an audit firm. No “no bugs left” claim.</span>
+    </footer>
+  </div>
 </body>
 </html>
