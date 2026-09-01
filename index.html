@@ -74,13 +74,13 @@
     <div class="stats">
       <div class="stat"><b>4</b><span>public sample repos you can clone today</span></div>
       <div class="stat"><b>10</b><span>zkVM guest / binding classes, public refs only</span></div>
-      <div class="stat"><b>13+</b><span>green local tests on the pool sample (CI)</span></div>
-      <div class="stat"><b>30d</b><span>fix-review window included — no extra fee</span></div>
+      <div class="stat"><b>32</b><span>green Foundry tests on the pool sample (CI, 2026-09-01)</span></div>
+      <div class="stat"><b>2</b><span>bug classes in that sample: inflation + fee creep</span></div>
     </div>
 
     <section id="why">
       <h2>Why this work exists</h2>
-      <p class="sub">Contests and audit PDFs are a snapshot. Production breaks on the path that was added last Tuesday. The expensive class is almost always the same: the protocol tracks the wrong identity for money.</p>
+      <p class="sub">Contests and audit PDFs are a snapshot. Production breaks on the path that was added last Tuesday. The expensive class is almost always the same: the protocol tracks the wrong identity for money — or takes a fee on principal instead of gain, while the ledger still “balances.”</p>
       <div class="grid c3 why">
         <div class="card">
           <div class="n">01</div>
@@ -113,8 +113,8 @@
         <a class="card" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
           <div class="tag">Share math</div>
           <div class="mono">pool-invariant-suite-demo</div>
-          <h3>First depositor inflation, killed in CI.</h3>
-          <p>Donate, dust shares, victim rounds to zero. Same handler stays green on the virtual-offset pool. Fork tests opt-in.</p>
+          <h3>Inflation and fee creep, both killed.</h3>
+          <p>Two classes, two invariant suites, 32 green local tests. Dust bounds are rate-relative — a fuzzer found the flat 2-wei lie. Fork / echidna / halmos opt-in.</p>
         </a>
         <a class="card" href="https://github.com/dersefurkan/risc0-onchain-verify-demo">
           <div class="tag">zkVM</div>
@@ -139,11 +139,12 @@
 <span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()          <span class="dim"># 100 in, 200 out on the split vault</span>
 <span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
 <span class="ok">[PASS]</span> test_inflation_attack_drains_vulnerable_pool()
+<span class="ok">[PASS]</span> test_fee_creep_drains_vulnerable_vault()
+<span class="ok">[PASS]</span> invariant_fees_bounded_by_yield()
 <span class="ok">[PASS]</span> test_tampered_journal_reverts()
-<span class="ok">[PASS]</span> test_wrong_image_id_reverts()
 <span class="fail">[FAIL]</span> invariant_attacker_cannot_extract()         <span class="dim"># gated: DEMO_RUN_KILLED=1</span>
 
-<span class="dim">Default CI: green on the fixed code. The kill path is opt-in, on purpose.</span></pre>
+<span class="dim">Default CI: 32 passed on the fixed code. Kill paths opt-in.</span></pre>
       </div>
     </section>
 
