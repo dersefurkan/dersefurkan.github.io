@@ -4,138 +4,193 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Furkan Derse — Security review for DeFi and zkVM</title>
-  <meta name="description" content="Independent security review. Deliverable is a Foundry repo with green forge test — not a PDF. Invariant suites, fork tests, zkVM guest/verifier binding.">
-  <meta property="og:title" content="Furkan Derse — Security review">
-  <meta property="og:description" content="Time-boxed security review for DeFi protocols and zkVM integrations. Repo deliverable, not a PDF.">
+  <meta name="description" content="Independent security review. The report is a Foundry suite: identity bugs, share inflation, zkVM guest/verifier binding. Repo deliverable, not a PDF.">
+  <meta property="og:title" content="Furkan Derse — the report is a test suite">
   <meta property="og:url" content="https://dersefurkan.github.io">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="bg" aria-hidden="true">
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="shape s3"></div>
+    <div class="shape s4"></div>
+  </div>
+
   <div class="wrap">
     <nav>
-      <a class="brand" href="#top">
-        <span class="mark">FD</span>
-        dersefurkan
-      </a>
+      <a class="brand" href="#top"><span class="mark">FD</span> dersefurkan</a>
       <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#process">Process</a></li>
+        <li><a href="#why">Why</a></li>
+        <li><a href="#work">Samples</a></li>
+        <li><a href="#services">Engage</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
 
     <header class="hero" id="top">
       <div>
-        <div class="kicker">Independent security review</div>
-        <h1>The report is a test suite.</h1>
+        <div class="kicker">DeFi · zkVM · Foundry</div>
+        <h1>Bugs hide in <em>identity</em>, not in the PDF.</h1>
         <p class="lede">
-          I review DeFi protocols and zkVM integrations.
-          The deliverable is a private Foundry repo with green
-          <strong><code>forge test</code></strong> — not a PDF, not an audit stamp.
+          After a contest you have a report. What you usually do not have is a harness
+          that fails on the <strong>next commit</strong> — the extra withdraw path, the
+          second ledger, the journal the verifier never bound.
+          I ship that harness.
         </p>
         <div class="cta">
-          <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Email for a scope call</a>
-          <a class="btn" href="https://github.com/dersefurkan">GitHub</a>
+          <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Book a 30-min scope call</a>
+          <a class="btn" href="https://github.com/dersefurkan">Public repos</a>
           <a class="btn" href="https://t.me/FURY_Fn">Telegram</a>
         </div>
       </div>
-      <div class="term" aria-hidden="true">
-        <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <pre><span class="dim">$</span> forge test
-<span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()
-<span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
-<span class="ok">[PASS]</span> test_tampered_journal_reverts()
-<span class="ok">[PASS]</span> test_wrong_image_id_reverts()
-
-<span class="dim">Suite result: ok. 13 passed; 0 failed.</span></pre>
+      <div class="viz" aria-hidden="true">
+        <svg viewBox="0 0 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="40" width="160" height="110" rx="16" stroke="#8b7cff" stroke-width="2" fill="#8b7cff18"/>
+          <text x="100" y="88" text-anchor="middle" fill="#c8ff4d" font-family="IBM Plex Mono" font-size="12">LEDGER A</text>
+          <text x="100" y="110" text-anchor="middle" fill="#f4f0ff" font-family="Space Grotesk" font-size="14">shares[user]</text>
+          <rect x="240" y="40" width="160" height="110" rx="16" stroke="#ff4d9a" stroke-width="2" fill="#ff4d9a18"/>
+          <text x="320" y="88" text-anchor="middle" fill="#4df0ff" font-family="IBM Plex Mono" font-size="12">LEDGER B</text>
+          <text x="320" y="110" text-anchor="middle" fill="#f4f0ff" font-family="Space Grotesk" font-size="14">receipts[id]</text>
+          <path d="M100 150 v40 H210 v20" stroke="#8b7cff" stroke-width="2"/>
+          <path d="M320 150 v40 H210 v20" stroke="#ff4d9a" stroke-width="2"/>
+          <rect x="130" y="210" width="160" height="88" rx="18" fill="url(#g)" stroke="#4df0ff"/>
+          <text x="210" y="248" text-anchor="middle" fill="#07060f" font-weight="700" font-family="Space Grotesk" font-size="16">ONE ASSET PILE</text>
+          <text x="210" y="272" text-anchor="middle" fill="#07060f" font-family="IBM Plex Mono" font-size="12">100 in → 200 out</text>
+          <defs>
+            <linearGradient id="g" x1="130" y1="210" x2="290" y2="298">
+              <stop stop-color="#c8ff4d"/>
+              <stop offset="1" stop-color="#4df0ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
     </header>
 
+    <div class="stats">
+      <div class="stat"><b>4</b><span>public sample repos you can clone today</span></div>
+      <div class="stat"><b>10</b><span>zkVM guest / binding classes, public refs only</span></div>
+      <div class="stat"><b>13+</b><span>green local tests on the pool sample (CI)</span></div>
+      <div class="stat"><b>30d</b><span>fix-review window included — no extra fee</span></div>
+    </div>
+
+    <section id="why">
+      <h2>Why this work exists</h2>
+      <p class="sub">Contests and audit PDFs are a snapshot. Production breaks on the path that was added last Tuesday. The expensive class is almost always the same: the protocol tracks the wrong identity for money.</p>
+      <div class="grid c3 why">
+        <div class="card">
+          <div class="n">01</div>
+          <h3>The extra exit</h3>
+          <p>Deposit credits shares <em>and</em> a receipt. Each withdraw burns only one. Same pile, two claims. Queue cursors, fast/slow paths, and trusted-forwarder flows are the same shape.</p>
+        </div>
+        <div class="card">
+          <div class="n">02</div>
+          <h3>The next commit</h3>
+          <p>Sherlock/Cantina wrap, report lands, then a patch ships. If CI does not fail when a double-claim reopens, the report was a souvenir. The suite is the product that stays.</p>
+        </div>
+        <div class="card">
+          <div class="n">03</div>
+          <h3>The zkVM seam</h3>
+          <p>Guest proves X. Journal commits Y. Verifier checks Z. If image ID is unpinned or the journal is not bound to chain context, a valid proof is still the wrong story. Auditor supply on this layer is thin — that is the niche.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="work">
-      <h2>Public samples</h2>
-      <p class="note">Teaching contracts and notes. Not findings against a live protocol.</p>
-      <div class="grid cards-2 work" style="margin-top:18px">
+      <h2>Runnable evidence</h2>
+      <p class="sub">Teaching contracts. Not a live-protocol disclosure. Clone, <code>forge test</code>, see the property fail then hold.</p>
+      <div class="grid c2 work">
         <a class="card" href="https://github.com/dersefurkan/split-ledger-vault-demo">
           <div class="tag">Vault identity</div>
-          <div class="name">split-ledger-vault-demo</div>
-          <h3>One deposit, two claims</h3>
-          <p>Directed PoC: 100 in, 200 out. Same conservation invariants hold on the patched vault.</p>
+          <div class="mono">split-ledger-vault-demo</div>
+          <h3>100 deposited. 200 extracted.</h3>
+          <p>Two ledgers, one pile. Directed PoC plus conservation invariants on the bound vault. Local only — no RPC.</p>
         </a>
         <a class="card" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
-          <div class="tag">Pool math</div>
-          <div class="name">pool-invariant-suite-demo</div>
-          <h3>Share inflation, caught by the suite</h3>
-          <p>Handler-based invariants on a lending pool. First-depositor inflation is a failing-then-fixed pair.</p>
+          <div class="tag">Share math</div>
+          <div class="mono">pool-invariant-suite-demo</div>
+          <h3>First depositor inflation, killed in CI.</h3>
+          <p>Donate, dust shares, victim rounds to zero. Same handler stays green on the virtual-offset pool. Fork tests opt-in.</p>
         </a>
         <a class="card" href="https://github.com/dersefurkan/risc0-onchain-verify-demo">
-          <div class="tag">zkVM seam</div>
-          <div class="name">risc0-onchain-verify-demo</div>
-          <h3>Guest → Groth16 → Solidity</h3>
-          <p>A real receipt verifies on a local EVM. Tampered journal and wrong image ID revert.</p>
+          <div class="tag">zkVM</div>
+          <div class="mono">risc0-onchain-verify-demo</div>
+          <h3>Real Groth16 seal. Tamper reverts.</h3>
+          <p>Rust guest → receipt → Solidity verifier. Wrong image ID and mutated journal fail. That is the seam review.</p>
         </a>
         <a class="card" href="https://github.com/dersefurkan/zkvm-guest-bug-notes">
-          <div class="tag">Notes</div>
-          <div class="name">zkvm-guest-bug-notes</div>
-          <h3>Ten guest / binding classes</h3>
-          <p>Public references only. Host/guest trust, journal binding, vk allowlists, replay.</p>
+          <div class="tag">Map</div>
+          <div class="mono">zkvm-guest-bug-notes</div>
+          <h3>Ten classes. Already-public sources.</h3>
+          <p>Host input, executor/circuit split, journal binding, vk allowlist, replay, upgrade ELF↔key. No undisclosed bugs.</p>
         </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>What green looks like</h2>
+      <div class="term">
+        <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <pre><span class="dim">$</span> forge test
+<span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()          <span class="dim"># 100 in, 200 out on the split vault</span>
+<span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
+<span class="ok">[PASS]</span> test_inflation_attack_drains_vulnerable_pool()
+<span class="ok">[PASS]</span> test_tampered_journal_reverts()
+<span class="ok">[PASS]</span> test_wrong_image_id_reverts()
+<span class="fail">[FAIL]</span> invariant_attacker_cannot_extract()         <span class="dim"># gated: DEMO_RUN_KILLED=1</span>
+
+<span class="dim">Default CI: green on the fixed code. The kill path is opt-in, on purpose.</span></pre>
       </div>
     </section>
 
     <section id="services">
-      <h2>What an engagement is</h2>
-      <div class="grid cards-3">
+      <h2>How you hire this</h2>
+      <p class="sub">Time-boxed security review. Not an audit stamp. Not “no bugs remain.” You keep the repo.</p>
+      <div class="grid c3">
         <div class="card">
           <div class="tag">Sprint</div>
-          <h3>1–2 week review</h3>
-          <p>One vault, matching engine, upgrade diff, or zkVM guest plus verifier. Fixed quote after a 30-minute scope call.</p>
+          <h3>1–2 weeks, one target</h3>
+          <p>Vault, matching engine, upgrade diff, or zkVM guest + verifier. Fixed quote after a free 30-minute call.</p>
         </div>
         <div class="card">
           <div class="tag">Retainer</div>
-          <h3>Weekly subscription</h3>
-          <p>Diff review, new invariant and fork tests, a weekly call. Cancel at month end.</p>
+          <h3>Weekly, like a subscription</h3>
+          <p>Every diff gets tests. Weekly walkthrough. Cancel at month end. Same bar as the sprint.</p>
         </div>
         <div class="card">
           <div class="tag">Included</div>
-          <h3>Fix review</h3>
-          <p>Findings ship as failing tests. When you patch, I flip them to passing — no extra fee, 30 days.</p>
+          <h3>Fix review, 30 days</h3>
+          <p>You patch; I re-run; the failing test turns green. No second invoice. Market standard — we actually do it.</p>
         </div>
       </div>
-      <p style="margin-top:18px;color:var(--muted);font-size:15px">
-        Full terms: <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.
-        This is a time-boxed <strong style="color:var(--text);font-weight:500">security review</strong>, not a security audit and not a guarantee.
-      </p>
-    </section>
-
-    <section id="process">
-      <h2>Process</h2>
-      <ol class="steps">
-        <li><strong>Scope call</strong> — 30 minutes, free. Target, constraints, authorized surface.</li>
-        <li><strong>Fixed quote</strong> — within 24 hours of the call.</li>
-        <li><strong>Repo delivery</strong> — private Foundry handoff. <code>forge test</code> is the report.</li>
-        <li><strong>Walkthrough</strong> — properties and findings live.</li>
-        <li><strong>Fix window</strong> — 30 days included, per finding.</li>
+      <ol class="steps" style="margin-top:8px">
+        <li><strong>Scope.</strong> Authorized surface only. No surprise live-chain work.</li>
+        <li><strong>Quote in 24h.</strong> Then private Foundry delivery. <code>forge test</code> is the report.</li>
+        <li><strong>Walkthrough + fix window.</strong> Full terms in <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.</li>
       </ol>
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
-      <p class="lede" style="font-size:18px">
-        <a href="mailto:dersefurkan32@gmail.com">dersefurkan32@gmail.com</a><br>
-        Telegram <a href="https://t.me/FURY_Fn">@FURY_Fn</a> ·
-        <a href="https://github.com/dersefurkan">github.com/dersefurkan</a>
-      </p>
-      <p class="note">Replies within 24 hours. Authorized work only — I do not test systems I am not contracted to review.</p>
+      <div class="contact-box">
+        <div>
+          <div class="kicker">Available</div>
+          <h2>Send the repo. Get a quote.</h2>
+          <p class="sub" style="margin:0">dersefurkan32@gmail.com · Telegram @FURY_Fn · replies within 24 hours.</p>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Email</a>
+          <a class="btn" href="https://github.com/dersefurkan">GitHub</a>
+        </div>
+      </div>
     </section>
 
     <footer>
-      <span>Furkan Derse · independent security review</span>
-      <span>Not an audit firm. No “no bugs left” claim.</span>
+      <span>Furkan Derse · independent · not an audit firm</span>
+      <span>Authorized work only. Samples are teaching code.</span>
     </footer>
   </div>
 </body>
