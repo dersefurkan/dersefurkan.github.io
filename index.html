@@ -32,51 +32,24 @@
       </ul>
     </nav>
 
-    <header class="hero" id="top">
-      <div>
-        <div class="kicker">DeFi · zkVM · Foundry</div>
-        <h1>Bugs hide in <em>identity</em>, not in the PDF.</h1>
-        <p class="lede">
-          After a contest you have a report. What you usually do not have is a harness
-          that fails on the <strong>next commit</strong> — the extra withdraw path, the
-          second ledger, the journal the verifier never bound.
-          I ship that harness.
-        </p>
-        <div class="cta">
-          <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Book a 30-min scope call</a>
-          <a class="btn" href="https://github.com/dersefurkan">Public repos</a>
-          <a class="btn" href="https://t.me/FURY_Fn">Telegram</a>
-        </div>
-      </div>
-      <div class="viz" aria-hidden="true">
-        <svg viewBox="0 0 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="40" width="160" height="110" rx="16" stroke="#8b7cff" stroke-width="2" fill="#8b7cff18"/>
-          <text x="100" y="88" text-anchor="middle" fill="#c8ff4d" font-family="IBM Plex Mono" font-size="12">LEDGER A</text>
-          <text x="100" y="110" text-anchor="middle" fill="#f4f0ff" font-family="Space Grotesk" font-size="14">shares[user]</text>
-          <rect x="240" y="40" width="160" height="110" rx="16" stroke="#ff4d9a" stroke-width="2" fill="#ff4d9a18"/>
-          <text x="320" y="88" text-anchor="middle" fill="#4df0ff" font-family="IBM Plex Mono" font-size="12">LEDGER B</text>
-          <text x="320" y="110" text-anchor="middle" fill="#f4f0ff" font-family="Space Grotesk" font-size="14">receipts[id]</text>
-          <path d="M100 150 v40 H210 v20" stroke="#8b7cff" stroke-width="2"/>
-          <path d="M320 150 v40 H210 v20" stroke="#ff4d9a" stroke-width="2"/>
-          <rect x="130" y="210" width="160" height="88" rx="18" fill="url(#g)" stroke="#4df0ff"/>
-          <text x="210" y="248" text-anchor="middle" fill="#07060f" font-weight="700" font-family="Space Grotesk" font-size="16">ONE ASSET PILE</text>
-          <text x="210" y="272" text-anchor="middle" fill="#07060f" font-family="IBM Plex Mono" font-size="12">100 in → 200 out</text>
-          <defs>
-            <linearGradient id="g" x1="130" y1="210" x2="290" y2="298">
-              <stop stop-color="#c8ff4d"/>
-              <stop offset="1" stop-color="#4df0ff"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </header>
+<h2>Services</h2>
+<ul>
+  <li><strong>Foundry invariant suites</strong> — stateful fuzzing harnesses around the identity that actually moves money</li>
+  <li><strong>Mainnet fork fuzz</strong> — fork tests against live deployments or pinned commits, adversarial call sequences</li>
+  <li><strong>Cross-engine verification</strong> — echidna property fuzzing, halmos symbolic checks and slither static analysis alongside the Foundry suite</li>
+  <li><strong>Upgrade / diff review</strong> — a focused pass over what changed, with storage-layout drift guards</li>
+  <li><strong>Adversarial test packs</strong> — "how would you drain this vault" as runnable failing-then-fixed tests</li>
+  <li><strong>zkVM / coprocessor boundary</strong> — guest program + on-chain verifier binding (image ID pinning, journal commitment, replay and seal-malleability checks)</li>
+</ul>
+<p>Engagement terms and process: <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a></p>
 
-    <div class="stats">
-      <div class="stat"><b>4</b><span>public sample repos you can clone today</span></div>
-      <div class="stat"><b>10</b><span>zkVM guest / binding classes, public refs only</span></div>
-      <div class="stat"><b>32</b><span>green Foundry tests on the pool sample (CI, 2026-09-01)</span></div>
-      <div class="stat"><b>2</b><span>bug classes in that sample: inflation + fee creep</span></div>
-    </div>
+<h2>Public work</h2>
+<ul>
+  <li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a> — money-moving identity in two shapes (split ledgers, missing queue cursor): directed PoCs + conservation and per-request invariants</li>
+  <li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">pool-invariant-suite-demo</a> — two killed bug classes (inflation, fee creep), handler invariants with rate-relative rounding bounds, echidna/halmos/slither cross-checks, layout drift guard — 32 tests</li>
+  <li><a href="https://github.com/dersefurkan/risc0-onchain-verify-demo">risc0-onchain-verify-demo</a> — zkVM seam end-to-end: Rust guest → Groth16 receipt → Solidity verifier, with negative, replay and seal-malleability tests on both sides</li>
+  <li><a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">zkvm-guest-bug-notes</a> — curated map of zkVM guest-program and onchain-binding bug classes (12 classes, public refs only)</li>
+</ul>
 
     <section id="why">
       <h2>Why this work exists</h2>
