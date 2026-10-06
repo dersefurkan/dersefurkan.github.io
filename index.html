@@ -122,7 +122,7 @@
           <div class="tag">Vault identity</div>
           <div class="mono">split-ledger-vault-demo</div>
           <h3>100 deposited. 200 extracted.</h3>
-          <p>Two ledgers, one pile. Directed PoC plus conservation invariants on the bound vault. Local only — no RPC.</p>
+          <p>Two ledgers, one pile. The fix keeps both exits. A share withdrawal of 40 leaves 60 on the receipt, and the other depositor is still paid. Two-actor invariant, 768 calls.</p>
         </a>
         <a class="card" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
           <div class="tag">Share math</div>
@@ -151,6 +151,7 @@
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
         <pre><span class="dim">$</span> forge test
 <span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()          <span class="dim"># 100 in, 200 out on the split vault</span>
+<span class="ok">[PASS]</span> test_bound_share_exit_then_receipt_pays_only_the_rest() <span class="dim"># 40 + 60, other depositor kept</span>
 <span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
 <span class="ok">[PASS]</span> test_inflation_attack_drains_vulnerable_pool()
 <span class="ok">[PASS]</span> test_fee_creep_drains_vulnerable_vault()
