@@ -3,207 +3,466 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Furkan Derse — one contract, five days, a Foundry repo</title>
-  <meta name="description" content="Fixed-price security review for one DeFi contract or one zkVM seam. Five business days, $1,500. The deliverable is a private Foundry repo, not an audit PDF.">
-  <meta property="og:title" content="Furkan Derse — one contract, five days, a Foundry repo">
-  <meta property="og:description" content="One vault, one upgrade diff, or one zkVM guest plus verifier. $1,500. Private Foundry repo. Not an audit stamp.">
+  <title>Furkan Derse — one surface, five days, a Foundry repo</title>
+  <meta name="description" content="Independent security review of one DeFi surface or one zkVM seam. Five business days, $1,500 before day one. The deliverable is a private Foundry repo.">
+  <meta property="og:title" content="Furkan Derse — one surface, five days, a Foundry repo">
+  <meta property="og:description" content="One contract family, one merged diff, or one zkVM guest plus its verifier. $1,500. Private Foundry repo. A failing test when a named property breaks.">
   <meta property="og:url" content="https://dersefurkan.github.io">
+  <meta property="og:type" content="website">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://dersefurkan.github.io/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg" aria-hidden="true">
-    <div class="shape s1"></div>
-    <div class="shape s2"></div>
-    <div class="shape s3"></div>
-    <div class="shape s4"></div>
-  </div>
+  <a class="skip" href="#content">Skip to content</a>
 
-  <div class="wrap">
-    <nav>
-      <a class="brand" href="#top"><span class="mark">FD</span> dersefurkan</a>
-      <ul>
-        <li><a href="#offer">Offer</a></li>
-        <li><a href="#work">Samples</a></li>
-        <li><a href="#why">Why</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-
-    <header class="hero" id="top">
-      <div>
-        <div class="kicker">Fixed price · one surface · no audit stamp</div>
-        <h1>The report is a <em>failing test.</em></h1>
-        <p class="lede">One vault, one upgrade diff, or one zkVM guest plus its verifier. Five business days. <strong>$1,500.</strong> You get a private Foundry repo. If a money property breaks, the test fails in that repo.</p>
-        <div class="cta">
-          <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Diff%20pack%20%E2%80%94%20one%20surface">Send the repo</a>
-          <a class="btn" href="#offer">What is in the $1,500</a>
-        </div>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-name">Derse</span>
+        <span class="brand-meta">security review</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+        <span class="when-closed">Menu</span>
+        <span class="when-open">Close</span>
+      </button>
+      <div id="nav-panel" class="nav-panel">
+        <nav class="nav" aria-label="Primary">
+          <ul>
+            <li><a href="#offer">Offer</a></li>
+            <li><a href="#method">Method</a></li>
+            <li class="has-sub">
+              <a href="#work" aria-haspopup="true">Evidence</a>
+              <ul class="menu">
+                <li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">Vault identity</a></li>
+                <li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">Share math</a></li>
+                <li><a href="https://github.com/dersefurkan/risc0-onchain-verify-demo">zkVM seam</a></li>
+                <li><a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">Twelve classes</a></li>
+              </ul>
+            </li>
+            <li><a href="#scope">Scope</a></li>
+            <li><a href="#faq">Questions</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack%20%E2%80%94%20one%20surface">Send the surface</a>
       </div>
-      <div class="viz" aria-hidden="true">
-        <svg viewBox="0 0 420 320" fill="none">
-          <rect x="40" y="36" width="250" height="150" rx="16" stroke="#8b7cff" stroke-width="1.5"/>
-          <text x="58" y="68" fill="#a39bb8" font-family="IBM Plex Mono, monospace" font-size="12">scope</text>
-          <text x="58" y="98" fill="#f4f0ff" font-family="Space Grotesk, sans-serif" font-size="22">one contract</text>
-          <text x="58" y="124" fill="#c8ff4d" font-family="IBM Plex Mono, monospace" font-size="13">or one zkVM seam</text>
-          <text x="58" y="156" fill="#4df0ff" font-family="IBM Plex Mono, monospace" font-size="13">5 days · $1,500</text>
-          <rect x="150" y="150" width="230" height="130" rx="16" stroke="#ff4d9a" stroke-width="1.5"/>
-          <text x="168" y="182" fill="#a39bb8" font-family="IBM Plex Mono, monospace" font-size="12">deliverable</text>
-          <text x="168" y="214" fill="#f4f0ff" font-family="Space Grotesk, sans-serif" font-size="22">forge test</text>
-          <text x="168" y="244" fill="#c8ff4d" font-family="IBM Plex Mono, monospace" font-size="13">private repo, not a PDF</text>
-        </svg>
-      </div>
-    </header>
-
-    <div class="stats">
-      <div class="stat"><b>5</b><span>business days</span></div>
-      <div class="stat"><b>$1,500</b><span>paid before day one</span></div>
-      <div class="stat"><b>1</b><span>contract or one seam</span></div>
-      <div class="stat"><b>14</b><span>days of fix re-runs</span></div>
     </div>
+  </header>
 
-    <section id="offer">
-      <h2>The thing you can buy</h2>
-      <p class="sub">Most teams do not need a two-week engagement to learn whether one vault conserves deposits, or whether one proof is bound to the right journal. This is that check. A founder can buy it from the email button.</p>
-      <div class="grid c3">
-        <div class="card">
-          <div class="tag">In</div>
-          <h3>One surface</h3>
-          <p>One contract family, one merged diff under 800 changed lines, or one guest program plus the verifier that checks it. You pick which before the clock starts.</p>
-        </div>
-        <div class="card">
-          <div class="tag">Out</div>
-          <h3>Not the whole protocol</h3>
-          <p>No second system, no token-economics essay, no “audit completed” badge. A green suite means the properties we named held under the tests we ran.</p>
-        </div>
-        <div class="card">
-          <div class="tag">You keep</div>
-          <h3>The repo</h3>
-          <p>Invariant or fork tests on the money identity, a property table, and a failing test when one breaks. Patch it and I re-run for 14 days. No second invoice.</p>
+  <main id="content">
+    <section class="hero wrap" id="top">
+      <div class="hero-copy">
+        <p class="kicker">Independent review · DeFi and zkVM</p>
+        <h1>The report is<br>a <em>failing test.</em></h1>
+        <p class="lede">One contract family, one merged diff, or one zkVM guest and the verifier that checks it. Five business days. The deliverable is a private Foundry repo: a property table, and a test that fails when a named property breaks.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack%20%E2%80%94%20one%20surface">Send the surface</a>
+          <a class="btn" href="#offer">Read the $1,500</a>
         </div>
       </div>
-      <ol class="steps">
-        <li><strong>Email the repo or the diff.</strong> Say which surface. I confirm it fits in one day.</li>
-        <li><strong>Pay the $1,500.</strong> USDC or bank transfer. The five days start when the payment lands.</li>
-        <li><strong>Private repo.</strong> Walkthrough at the end. Terms in <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.</li>
+      <aside class="spec" aria-label="Engagement specification">
+        <div class="spec-top">
+          <span>Engagement</span>
+          <span>FD-1500</span>
+        </div>
+        <dl>
+          <div><dt>Surface</dt><dd>One</dd></div>
+          <div><dt>Clock</dt><dd>5 business days</dd></div>
+          <div><dt>Fee</dt><dd>$1,500</dd></div>
+          <div><dt>Starts</dt><dd>When payment lands</dd></div>
+          <div><dt>Deliverable</dt><dd>Private Foundry repo</dd></div>
+          <div><dt>Re-run</dt><dd>14 days, included</dd></div>
+          <div><dt>Stamp</dt><dd>None</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="strip" aria-label="Terms at a glance">
+      <div class="wrap strip-grid">
+        <div><b>5</b><span>business days, after payment</span></div>
+        <div><b>$1,500</b><span>USDC or bank transfer</span></div>
+        <div><b>1</b><span>surface, confirmed before you pay</span></div>
+        <div><b>14</b><span>days of fix re-runs, same invoice</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="offer">
+      <div class="section-head">
+        <p class="index">01 — Offer</p>
+        <h2>What the email button buys.</h2>
+        <p class="sub">A founder can buy this without a sales call. You name the surface. I confirm it fits, within one business day. You pay. The five days start when the money lands.</p>
+      </div>
+      <ol class="buy">
+        <li>
+          <span class="step">01</span>
+          <div>
+            <h3>Name one surface</h3>
+            <p>One contract family, one merged diff under 800 changed lines, or one guest program plus the on-chain verifier that checks it. Send the repo or the diff and say which.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step">02</span>
+          <div>
+            <h3>Fit is confirmed before payment</h3>
+            <p>If the ask is a whole protocol, a second system, or a diff past that line count, I say so before you pay. The pack does not stretch to cover it.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step">03</span>
+          <div>
+            <h3>Pay $1,500. The clock starts</h3>
+            <p>USDC or bank transfer. Invoice on request. No wallet is published on this page. Five business days run from the day the payment lands.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step">04</span>
+          <div>
+            <h3>A private repo, then fourteen days</h3>
+            <p>You receive the suite, the property table, and one walkthrough. You patch. I re-run for 14 days. The failing test goes green, or the table says it did not. No second invoice inside that window.</p>
+          </div>
+        </li>
       </ol>
     </section>
 
-    <section id="why">
-      <h2>Why this work exists</h2>
-      <p class="sub">Contests and audit PDFs are a snapshot. Production breaks on the path that was added last Tuesday. The expensive class is almost always the same: the protocol tracks the wrong identity for money — or takes a fee on principal instead of gain, while the ledger still “balances.”</p>
-      <div class="grid c3 why">
-        <div class="card">
-          <div class="n">01</div>
-          <h3>The extra exit</h3>
-          <p>Deposit credits shares <em>and</em> a receipt. Each withdraw burns only one. Same pile, two claims. Queue cursors, fast/slow paths, and trusted-forwarder flows are the same shape.</p>
+    <section class="band">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="index">02 — Deliverable</p>
+          <h2>A repository your CI can keep.</h2>
+          <p class="sub">The work product is the suite. A PDF that cannot fail in CI becomes a souvenir the week a new commit reopens the bug.</p>
         </div>
-        <div class="card">
-          <div class="n">02</div>
-          <h3>The next commit</h3>
-          <p>Sherlock/Cantina wrap, report lands, then a patch ships. If CI does not fail when a double-claim reopens, the report was a souvenir. The suite is the product that stays.</p>
-        </div>
-        <div class="card">
-          <div class="n">03</div>
-          <h3>The zkVM seam</h3>
-          <p>Guest proves X. Journal commits Y. Verifier checks Z. If image ID is unpinned or the journal is not bound to chain context, a valid proof is still the wrong story. Auditor supply on this layer is thin — that is the niche.</p>
-        </div>
+        <ul class="ticks">
+          <li>
+            <h3>Property table</h3>
+            <p>Each named property, the state it talks about, and the test that pins it. Written so an engineer who was not in the walkthrough can see what was claimed.</p>
+          </li>
+          <li>
+            <h3>Tests on the money identity</h3>
+            <p>Invariant or fork tests aimed at the value that actually moves: shares, receipts, cursors, fees, journals, image ids. The handler is part of the delivery, not a private note.</p>
+          </li>
+          <li>
+            <h3>A failing test when a property breaks</h3>
+            <p>If a named property does not hold, the repo contains the sequence that shows it. If every named property holds under the tests that ran, the table says that, and only that.</p>
+          </li>
+          <li>
+            <h3>One walkthrough</h3>
+            <p>How the surface was read, which identity was treated as the money, and which paths were left outside the pack. Terms live in <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section id="work">
-      <h2>Runnable evidence</h2>
-      <p class="sub">Teaching contracts. Not a live-protocol disclosure. Clone, <code>forge test</code>, see the property fail then hold.</p>
-      <div class="grid c2 work">
-        <a class="card" href="https://github.com/dersefurkan/split-ledger-vault-demo">
-          <div class="tag">Vault identity</div>
-          <div class="mono">split-ledger-vault-demo</div>
-          <h3>100 deposited. 200 extracted.</h3>
-          <p>Two ledgers, one pile. The fix keeps both exits. A share withdrawal of 40 leaves 60 on the receipt, and the other depositor is still paid. Two-actor invariant, 768 calls.</p>
+    <section class="wrap section" id="method">
+      <div class="section-head">
+        <p class="index">03 — Method</p>
+        <h2>Five days, in order.</h2>
+        <p class="sub">The calendar is the shape of the pack. It is a review of the named surface. A green suite means those properties held under those tests.</p>
+      </div>
+      <ol class="days">
+        <li>
+          <span>Day 0</span>
+          <h3>Confirm</h3>
+          <p>The surface is named in writing. I accept it or I send it back. Payment has not happened yet.</p>
+        </li>
+        <li>
+          <span>Days 1–2</span>
+          <h3>Read the identity</h3>
+          <p>Where value is credited, where it is burned, and which second ledger, cursor, fee base, or journal field can disagree with the first.</p>
+        </li>
+        <li>
+          <span>Day 3</span>
+          <h3>Write the break</h3>
+          <p>A concrete sequence: two exits on one deposit, a fee taken on principal, a share price moved by a donation, a seal accepted twice.</p>
+        </li>
+        <li>
+          <span>Day 4</span>
+          <h3>Pin both sides</h3>
+          <p>The sequence stays as a test. Where the state space is the point, a handler drives it. The killed path and the holding path are different tests.</p>
+        </li>
+        <li>
+          <span>Day 5</span>
+          <h3>Hand over</h3>
+          <p>Private repo, property table, one walkthrough. Your patch window opens the same day and runs for fourteen days.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="wrap section" id="classes">
+      <div class="section-head">
+        <p class="index">04 — What the review is built to see</p>
+        <h2>Three shapes that survive a clean diff.</h2>
+        <p class="sub">Most of the expensive bugs in a single vault, a share pool, or a proof gate are not a mystery opcode. The protocol is sure about an identity the code does not enforce.</p>
+      </div>
+      <div class="classes">
+        <article>
+          <p class="kicker">Vault</p>
+          <h3>Two ledgers, one pile.</h3>
+          <p>A deposit credits shares and a receipt. Each exit burns only one of them. The same shape shows up in queue cursors, fast and slow paths, and trusted forwarders. The fix keeps both exits and spends one balance. A withdrawal of 40 must leave 60 on the receipt, and the other depositor must still be paid.</p>
+        </article>
+        <article>
+          <p class="kicker">Shares</p>
+          <h3>The ledger balances while someone is paid from principal.</h3>
+          <p>Inflation donations move a price that should have ignored them. A fee on the whole ledger, principal included, harvests depositors. Solvency can still hold. The bound is the fee against gain, and the dust bound has to be rate-relative. A flat wei ceiling is how a green suite lies.</p>
+        </article>
+        <article>
+          <p class="kicker">zkVM</p>
+          <h3>The proof is valid. The story is the wrong one.</h3>
+          <p>The guest proves a computation. The journal commits what the application will believe. The verifier checks a seal against an image id. Replay of a stateless verifier is expected. A payment gate has to nullify the statement, and a longer seal must hit the same key. If the journal has no chain id, a second deployment is a different problem, and the table should say so.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="work">
+      <div class="section-head">
+        <p class="index">05 — Evidence</p>
+        <h2>Runnable, and not a disclosure.</h2>
+        <p class="sub">Four public repositories. Teaching contracts and a public map. Clone them, run <code>forge test</code>, and watch a property fail on the broken variant and hold on the bound one. Nothing here is a finding against a live protocol.</p>
+      </div>
+      <div class="studies">
+        <a class="study" href="https://github.com/dersefurkan/split-ledger-vault-demo">
+          <div class="study-meta">
+            <span class="kicker">01</span>
+            <span class="mono">split-ledger-vault-demo</span>
+          </div>
+          <div>
+            <h3>100 deposited. 200 extracted.</h3>
+            <p>The broken vault pays a deposit through shares and again through the receipt. The bound vault keeps both doors. Forty out through shares leaves sixty on the receipt. A second depositor is paid in full. Two actors, 768 calls, both invariants hold. Default suite: 19 passed, 1 gated suite skipped.</p>
+          </div>
+          <span class="go" aria-hidden="true">View</span>
         </a>
-        <a class="card" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
-          <div class="tag">Share math</div>
-          <div class="mono">pool-invariant-suite-demo</div>
-          <h3>Inflation and fee creep, both killed.</h3>
-          <p>Two classes, two invariant suites, 24 passed locally. Dust bounds are rate-relative — a fuzzer found the flat 2-wei lie. Fork / echidna / halmos opt-in.</p>
+        <a class="study" href="https://github.com/dersefurkan/pool-invariant-suite-demo">
+          <div class="study-meta">
+            <span class="kicker">02</span>
+            <span class="mono">pool-invariant-suite-demo</span>
+          </div>
+          <div>
+            <h3>Inflation and fee creep, both killed.</h3>
+            <p>Two classes, two invariant suites on the fixed contracts. Donation does not move the price. The fee is taken on gain, capped, and the dust bound is rate-relative. Default suite: 24 passed, 3 skipped. The fork run and the two killed suites stay opt-in.</p>
+          </div>
+          <span class="go" aria-hidden="true">View</span>
         </a>
-        <a class="card" href="https://github.com/dersefurkan/risc0-onchain-verify-demo">
-          <div class="tag">zkVM</div>
-          <div class="mono">risc0-onchain-verify-demo</div>
-          <h3>Real Groth16 seal. Tamper reverts.</h3>
-          <p>Rust guest → receipt → Solidity verifier. The raw verifier accepts the same seal twice. The payment gate nullifies the journal, so a longer seal does not pay a second time. The journal still has no chain id.</p>
+        <a class="study" href="https://github.com/dersefurkan/risc0-onchain-verify-demo">
+          <div class="study-meta">
+            <span class="kicker">03</span>
+            <span class="mono">risc0-onchain-verify-demo</span>
+          </div>
+          <div>
+            <h3>A real Groth16 seal. A gate that pays once.</h3>
+            <p>Rust guest, committed receipt, Solidity verifier. Tampered journal and a wrong image id revert. The raw verifier accepts the same seal twice, and a longer seal still verifies. The payment gate nullifies the journal digest, so the second shape does not pay. The journal is 24 bytes and has no chain id. Default suite: 12 passed.</p>
+          </div>
+          <span class="go" aria-hidden="true">View</span>
         </a>
-        <a class="card" href="https://github.com/dersefurkan/zkvm-guest-bug-notes">
-          <div class="tag">Map</div>
-          <div class="mono">zkvm-guest-bug-notes</div>
-          <h3>Twelve classes. Already-public sources.</h3>
-          <p>Host input, executor/circuit split, journal binding, vk allowlist, replay, upgrade ELF↔key. No undisclosed bugs.</p>
+        <a class="study" href="https://github.com/dersefurkan/zkvm-guest-bug-notes">
+          <div class="study-meta">
+            <span class="kicker">04</span>
+            <span class="mono">zkvm-guest-bug-notes</span>
+          </div>
+          <div>
+            <h3>Twelve classes. Already-public sources.</h3>
+            <p>A map of the guest and the binding layer: host input, executor and circuit split, journal binding, verification-key allowlists, replay, and ELF-to-key upgrades. Every reference was already public. No undisclosed bugs.</p>
+          </div>
+          <span class="go" aria-hidden="true">View</span>
         </a>
       </div>
     </section>
 
-    <section>
-      <h2>What green looks like</h2>
-      <div class="term">
-        <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <section class="wrap section tight">
+      <div class="section-head">
+        <p class="index">Fig. 01 — default suites</p>
+        <h2>What green looks like.</h2>
+      </div>
+      <figure class="term">
+        <figcaption>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>forge test · teaching repos</span>
+        </figcaption>
         <pre><span class="dim">$</span> forge test
-<span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()          <span class="dim"># 100 in, 200 out on the split vault</span>
-<span class="ok">[PASS]</span> test_bound_share_exit_then_receipt_pays_only_the_rest() <span class="dim"># 40 + 60, other depositor kept</span>
+<span class="ok">[PASS]</span> test_double_pay_via_split_ledgers()
+<span class="dim">       100 in, 200 out on the split vault</span>
+<span class="ok">[PASS]</span> test_bound_share_exit_then_receipt_pays_only_the_rest()
+<span class="dim">       40 + 60, the other depositor kept</span>
 <span class="ok">[PASS]</span> invariant_withdrawals_cannot_exceed_deposits()
 <span class="ok">[PASS]</span> test_inflation_attack_drains_vulnerable_pool()
 <span class="ok">[PASS]</span> test_fee_creep_drains_vulnerable_vault()
 <span class="ok">[PASS]</span> invariant_fees_bounded_by_yield()
 <span class="ok">[PASS]</span> test_tampered_journal_reverts()
-<span class="ok">[PASS]</span> test_bound_gate_pays_once_even_if_the_seal_grows() <span class="dim"># 100 once; extra seal byte still spent</span>
-<span class="fail">[FAIL]</span> invariant_attacker_cannot_extract()         <span class="dim"># gated: DEMO_RUN_KILLED=1</span>
+<span class="ok">[PASS]</span> test_bound_gate_pays_once_even_if_the_seal_grows()
+<span class="dim">       100 once; an extra seal byte is still spent</span>
+<span class="fail">[FAIL]</span> invariant_attacker_cannot_extract()
+<span class="dim">       gated behind DEMO_RUN_KILLED=1</span>
 
-<span class="dim">split-ledger 19 passed · pool 24 passed · onchain-verify 12 passed. Killed suites stay gated.</span></pre>
-      </div>
+<span class="dim">split-ledger 19 passed · pool 24 passed · onchain-verify 12 passed</span></pre>
+      </figure>
     </section>
 
-    <section id="services">
-      <h2>After the first pack</h2>
-      <p class="sub">The $1,500 pack is the front door. A longer pass exists only after that repo was useful.</p>
-      <div class="grid c3">
-        <div class="card">
-          <div class="tag">Pack</div>
-          <h3>$1,500, five days</h3>
-          <p>The offer above. One surface. This is what the email button buys.</p>
-        </div>
-        <div class="card">
-          <div class="tag">Next</div>
-          <h3>A second surface</h3>
-          <p>Same price, same shape, a different contract or the verifier you left out. Quoted only after the first delivery.</p>
-        </div>
-        <div class="card">
-          <div class="tag">Included</div>
-          <h3>Fix re-run, 14 days</h3>
-          <p>You patch. I re-run. The failing test turns green, or the property table says it did not. No second invoice inside that window.</p>
-        </div>
+    <section class="wrap section" id="scope">
+      <div class="section-head">
+        <p class="index">06 — Scope</p>
+        <h2>One surface, written down.</h2>
+        <p class="sub">The boundary is the product. A second surface is a second pack, same price, and only after the first repo has been delivered.</p>
       </div>
-    </section>
-
-    <section id="contact">
-      <div class="contact-box">
+      <div class="scope">
         <div>
-          <div class="kicker">Available</div>
-          <h2>Send one repo. Five days. $1,500.</h2>
-          <p class="sub" style="margin:0">dersefurkan32@gmail.com · Telegram @FURY_Fn · reply within one business day.</p>
+          <h3>Inside the pack</h3>
+          <ul>
+            <li>One contract family</li>
+            <li>One merged diff under 800 changed lines</li>
+            <li>One zkVM guest plus the verifier that checks it</li>
+            <li>Property table and the tests that pin it</li>
+            <li>A failing test when a named property breaks</li>
+            <li>One walkthrough</li>
+            <li>Fourteen days of re-runs after you patch</li>
+          </ul>
         </div>
-        <div class="cta">
-          <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Diff%20pack%20%E2%80%94%20one%20surface">Email the repo</a>
-          <a class="btn" href="https://github.com/dersefurkan">GitHub</a>
+        <div>
+          <h3>Outside the pack</h3>
+          <ul>
+            <li>A second contract family or a second guest</li>
+            <li>A whole protocol, or a diff past 800 lines</li>
+            <li>An audit stamp, a badge, or a launch sign-off</li>
+            <li>A token-economics essay</li>
+            <li>A promise that every bug was found</li>
+            <li>Mainnet transactions, or systems you did not hire</li>
+            <li>Filing a report to a platform on your behalf</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <footer>
-      <span>Furkan Derse · independent · not an audit firm</span>
-      <span>Authorized work only. Samples are teaching code.</span>
-    </footer>
-  </div>
+    <section class="wrap section" id="after">
+      <div class="section-head">
+        <p class="index">07 — After the first pack</p>
+        <h2>The door stays the same width.</h2>
+      </div>
+      <div class="after">
+        <article>
+          <p class="kicker">This invoice</p>
+          <h3>$1,500, five days</h3>
+          <p>The pack above. One surface. This is what the email button buys.</p>
+        </article>
+        <article>
+          <p class="kicker">A later invoice</p>
+          <h3>A second surface</h3>
+          <p>Same price, same shape, a different contract or the verifier left out of the first pack. Quoted only after the first delivery.</p>
+        </article>
+        <article>
+          <p class="kicker">Included</p>
+          <h3>Fix re-run, 14 days</h3>
+          <p>You patch. I re-run the suite. The result is in the repo. No second invoice inside the window.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section" id="faq">
+      <div class="section-head">
+        <p class="index">08 — Questions</p>
+        <h2>Before you send the repo.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is this a security audit?</summary>
+          <p>It is a security review of one named surface. It is not a security audit, and it is not a guarantee. A green suite means the tested properties held under the tested conditions. Another reviewer, a contest, a bounty, and monitoring remain the right next steps for a launch.</p>
+        </details>
+        <details>
+          <summary>What if the review finds nothing?</summary>
+          <p>You still receive the property table, the tests, and the walkthrough. The fee is for the review of that surface. The table records what held, and it does not inflate a clean run into a finding.</p>
+        </details>
+        <details>
+          <summary>What if my diff is larger than 800 lines, or I have two contracts?</summary>
+          <p>That does not fit this pack. I confirm the fit before you pay. A second surface can be a second pack after the first repo is delivered. It is not folded into the first five days.</p>
+        </details>
+        <details>
+          <summary>When do the five days start, and how do I pay?</summary>
+          <p>You email the surface. I confirm it fits within one business day. You pay $1,500 by USDC or bank transfer. An invoice is available on request. The five business days start when the payment lands. No wallet address is published here.</p>
+        </details>
+        <details>
+          <summary>Who owns the repository?</summary>
+          <p>You do. The repo is private. It holds the tests, the property table, and the notes from the walkthrough. The public samples on this page are separate teaching code.</p>
+        </details>
+        <details>
+          <summary>What are the four public repositories?</summary>
+          <p>Teaching material. The vault, the pool, and the zkVM gate are constructed so a property fails and then holds. The notes map twelve already-public bug classes. They are not client work and not live-protocol disclosures.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="contact wrap" id="contact">
+      <p class="kicker">Available</p>
+      <h2>Send one surface.</h2>
+      <p class="contact-line"><a href="mailto:dersefurkan32@gmail.com">dersefurkan32@gmail.com</a></p>
+      <p class="contact-line"><a href="https://t.me/FURY_Fn">Telegram @FURY_Fn</a></p>
+      <p class="sub">Reply within one business day. Name the surface in the first note.</p>
+      <div class="cta">
+        <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack%20%E2%80%94%20one%20surface">Email the repo</a>
+        <a class="btn" href="https://github.com/dersefurkan">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <p class="brand-name">Derse</p>
+        <p>Furkan Derse. Independent security review of one surface at a time.</p>
+      </div>
+      <div>
+        <p class="foot-label">Offer</p>
+        <ul>
+          <li><a href="#offer">The $1,500</a></li>
+          <li><a href="#method">Five days</a></li>
+          <li><a href="#scope">Scope</a></li>
+          <li><a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-label">Evidence</p>
+        <ul>
+          <li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">Vault identity</a></li>
+          <li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">Share math</a></li>
+          <li><a href="https://github.com/dersefurkan/risc0-onchain-verify-demo">zkVM seam</a></li>
+          <li><a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">Twelve classes</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-label">Contact</p>
+        <ul>
+          <li><a href="mailto:dersefurkan32@gmail.com">dersefurkan32@gmail.com</a></li>
+          <li><a href="https://t.me/FURY_Fn">@FURY_Fn</a></li>
+          <li><a href="https://github.com/dersefurkan">github.com/dersefurkan</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-end">
+      <span>Teaching samples are not client findings.</span>
+      <span>Authorized work only.</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.querySelector(".nav-toggle");
+      var panel = document.getElementById("nav-panel");
+      if (!btn || !panel) return;
+      function setOpen(open) {
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        panel.classList.toggle("is-open", open);
+        document.body.classList.toggle("nav-open", open);
+      }
+      btn.addEventListener("click", function () {
+        setOpen(btn.getAttribute("aria-expanded") !== "true");
+      });
+      panel.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () { setOpen(false); });
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") setOpen(false);
+      });
+    })();
+  </script>
 </body>
 </html>
