@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Furkan Derse — Security review for DeFi and zkVM</title>
-  <meta name="description" content="Independent security review. The report is a Foundry suite: identity bugs, share inflation, zkVM guest/verifier binding. Repo deliverable, not a PDF.">
-  <meta property="og:title" content="Furkan Derse — the report is a test suite">
+  <title>Furkan Derse — one contract, five days, a Foundry repo</title>
+  <meta name="description" content="Fixed-price security review for one DeFi contract or one zkVM seam. Five business days, $1,500. The deliverable is a private Foundry repo, not an audit PDF.">
+  <meta property="og:title" content="Furkan Derse — one contract, five days, a Foundry repo">
+  <meta property="og:description" content="One vault, one upgrade diff, or one zkVM guest plus verifier. $1,500. Private Foundry repo. Not an audit stamp.">
   <meta property="og:url" content="https://dersefurkan.github.io">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,31 +26,71 @@
     <nav>
       <a class="brand" href="#top"><span class="mark">FD</span> dersefurkan</a>
       <ul>
-        <li><a href="#why">Why</a></li>
+        <li><a href="#offer">Offer</a></li>
         <li><a href="#work">Samples</a></li>
-        <li><a href="#services">Engage</a></li>
+        <li><a href="#why">Why</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
 
-<h2>Services</h2>
-<ul>
-  <li><strong>Foundry invariant suites</strong> — stateful fuzzing harnesses around the identity that actually moves money</li>
-  <li><strong>Mainnet fork fuzz</strong> — fork tests against live deployments or pinned commits, adversarial call sequences</li>
-  <li><strong>Cross-engine verification</strong> — echidna property fuzzing, halmos symbolic checks and slither static analysis alongside the Foundry suite</li>
-  <li><strong>Upgrade / diff review</strong> — a focused pass over what changed, with storage-layout drift guards</li>
-  <li><strong>Adversarial test packs</strong> — "how would you drain this vault" as runnable failing-then-fixed tests</li>
-  <li><strong>zkVM / coprocessor boundary</strong> — guest program + on-chain verifier binding (image ID pinning, journal commitment, replay and seal-malleability checks)</li>
-</ul>
-<p>Engagement terms and process: <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a></p>
+    <header class="hero" id="top">
+      <div>
+        <div class="kicker">Fixed price · one surface · no audit stamp</div>
+        <h1>The report is a <em>failing test.</em></h1>
+        <p class="lede">One vault, one upgrade diff, or one zkVM guest plus its verifier. Five business days. <strong>$1,500.</strong> You get a private Foundry repo. If a money property breaks, the test fails in that repo.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Diff%20pack%20%E2%80%94%20one%20surface">Send the repo</a>
+          <a class="btn" href="#offer">What is in the $1,500</a>
+        </div>
+      </div>
+      <div class="viz" aria-hidden="true">
+        <svg viewBox="0 0 420 320" fill="none">
+          <rect x="40" y="36" width="250" height="150" rx="16" stroke="#8b7cff" stroke-width="1.5"/>
+          <text x="58" y="68" fill="#a39bb8" font-family="IBM Plex Mono, monospace" font-size="12">scope</text>
+          <text x="58" y="98" fill="#f4f0ff" font-family="Space Grotesk, sans-serif" font-size="22">one contract</text>
+          <text x="58" y="124" fill="#c8ff4d" font-family="IBM Plex Mono, monospace" font-size="13">or one zkVM seam</text>
+          <text x="58" y="156" fill="#4df0ff" font-family="IBM Plex Mono, monospace" font-size="13">5 days · $1,500</text>
+          <rect x="150" y="150" width="230" height="130" rx="16" stroke="#ff4d9a" stroke-width="1.5"/>
+          <text x="168" y="182" fill="#a39bb8" font-family="IBM Plex Mono, monospace" font-size="12">deliverable</text>
+          <text x="168" y="214" fill="#f4f0ff" font-family="Space Grotesk, sans-serif" font-size="22">forge test</text>
+          <text x="168" y="244" fill="#c8ff4d" font-family="IBM Plex Mono, monospace" font-size="13">private repo, not a PDF</text>
+        </svg>
+      </div>
+    </header>
 
-<h2>Public work</h2>
-<ul>
-  <li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a> — money-moving identity in two shapes (split ledgers, missing queue cursor): directed PoCs + conservation and per-request invariants</li>
-  <li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">pool-invariant-suite-demo</a> — two killed bug classes (inflation, fee creep), handler invariants with rate-relative rounding bounds, echidna/halmos/slither cross-checks, layout drift guard — 32 tests</li>
-  <li><a href="https://github.com/dersefurkan/risc0-onchain-verify-demo">risc0-onchain-verify-demo</a> — zkVM seam end-to-end: Rust guest → Groth16 receipt → Solidity verifier, with negative, replay and seal-malleability tests on both sides</li>
-  <li><a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">zkvm-guest-bug-notes</a> — curated map of zkVM guest-program and onchain-binding bug classes (12 classes, public refs only)</li>
-</ul>
+    <div class="stats">
+      <div class="stat"><b>5</b><span>business days</span></div>
+      <div class="stat"><b>$1,500</b><span>paid before day one</span></div>
+      <div class="stat"><b>1</b><span>contract or one seam</span></div>
+      <div class="stat"><b>14</b><span>days of fix re-runs</span></div>
+    </div>
+
+    <section id="offer">
+      <h2>The thing you can buy</h2>
+      <p class="sub">Most teams do not need a two-week engagement to learn whether one vault conserves deposits, or whether one proof is bound to the right journal. This is that check. A founder can buy it from the email button.</p>
+      <div class="grid c3">
+        <div class="card">
+          <div class="tag">In</div>
+          <h3>One surface</h3>
+          <p>One contract family, one merged diff under 800 changed lines, or one guest program plus the verifier that checks it. You pick which before the clock starts.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Out</div>
+          <h3>Not the whole protocol</h3>
+          <p>No second system, no token-economics essay, no “audit completed” badge. A green suite means the properties we named held under the tests we ran.</p>
+        </div>
+        <div class="card">
+          <div class="tag">You keep</div>
+          <h3>The repo</h3>
+          <p>Invariant or fork tests on the money identity, a property table, and a failing test when one breaks. Patch it and I re-run for 14 days. No second invoice.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><strong>Email the repo or the diff.</strong> Say which surface. I confirm it fits in one day.</li>
+        <li><strong>Pay the $1,500.</strong> USDC or bank transfer. The five days start when the payment lands.</li>
+        <li><strong>Private repo.</strong> Walkthrough at the end. Terms in <a href="https://github.com/dersefurkan/dersefurkan/blob/main/SERVICES.md">SERVICES.md</a>.</li>
+      </ol>
+    </section>
 
     <section id="why">
       <h2>Why this work exists</h2>
@@ -98,7 +139,7 @@
         <a class="card" href="https://github.com/dersefurkan/zkvm-guest-bug-notes">
           <div class="tag">Map</div>
           <div class="mono">zkvm-guest-bug-notes</div>
-          <h3>Ten classes. Already-public sources.</h3>
+          <h3>Twelve classes. Already-public sources.</h3>
           <p>Host input, executor/circuit split, journal binding, vk allowlist, replay, upgrade ELF↔key. No undisclosed bugs.</p>
         </a>
       </div>
@@ -122,23 +163,23 @@
     </section>
 
     <section id="services">
-      <h2>How you hire this</h2>
-      <p class="sub">Time-boxed security review. Not an audit stamp. Not “no bugs remain.” You keep the repo.</p>
+      <h2>After the first pack</h2>
+      <p class="sub">The $1,500 pack is the front door. A longer pass exists only after that repo was useful.</p>
       <div class="grid c3">
         <div class="card">
-          <div class="tag">Sprint</div>
-          <h3>1–2 weeks, one target</h3>
-          <p>Vault, matching engine, upgrade diff, or zkVM guest + verifier. Fixed quote after a free 30-minute call.</p>
+          <div class="tag">Pack</div>
+          <h3>$1,500, five days</h3>
+          <p>The offer above. One surface. This is what the email button buys.</p>
         </div>
         <div class="card">
-          <div class="tag">Retainer</div>
-          <h3>Weekly, like a subscription</h3>
-          <p>Every diff gets tests. Weekly walkthrough. Cancel at month end. Same bar as the sprint.</p>
+          <div class="tag">Next</div>
+          <h3>A second surface</h3>
+          <p>Same price, same shape, a different contract or the verifier you left out. Quoted only after the first delivery.</p>
         </div>
         <div class="card">
           <div class="tag">Included</div>
-          <h3>Fix review, 30 days</h3>
-          <p>You patch; I re-run; the failing test turns green. No second invoice. Market standard — we actually do it.</p>
+          <h3>Fix re-run, 14 days</h3>
+          <p>You patch. I re-run. The failing test turns green, or the property table says it did not. No second invoice inside that window.</p>
         </div>
       </div>
       <ol class="steps" style="margin-top:8px">
@@ -152,8 +193,8 @@
       <div class="contact-box">
         <div>
           <div class="kicker">Available</div>
-          <h2>Send the repo. Get a quote.</h2>
-          <p class="sub" style="margin:0">dersefurkan32@gmail.com · Telegram @FURY_Fn · replies within 24 hours.</p>
+          <h2>Send one repo. Five days. $1,500.</h2>
+          <p class="sub" style="margin:0">dersefurkan32@gmail.com · Telegram @FURY_Fn · reply within one business day.</p>
         </div>
         <div class="cta">
           <a class="btn primary" href="mailto:dersefurkan32@gmail.com">Email</a>
