@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10. Server-side request forgery — Derse</title>
+  <meta name="description" content="10. Server-side request forgery. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/web/">Web</a></p>
+    <h1 class="page-title">10. Server-side request forgery</h1>
+    <p><strong>Description.</strong> The server fetches a URL, a host, or a webhook the caller chose, and the fetch uses the server&#x27;s network. A metadata address, an internal admin port, or a file URL is the effect. A URL that is only displayed is not this class.</p>
+<p><strong>Why it matters.</strong> The server is inside a network the caller is not. The fetch is the caller&#x27;s request wearing the server&#x27;s address.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>List every scoped feature that takes a URL or a hostname and then connects.</li>
+<li>The allowlist must be the server&#x27;s, applied after redirects, not a prefix check the caller can</li>
+<p>shape.</p>
+<li>Redirects to a second host are part of the same test.</li>
+<li>Invariant: a host outside the scope produces no outbound request. The test observes that on a</li>
+<p>host the scope explicitly allows as the sink, or by the server&#x27;s own deny log.</p>
+</ul>
+<p><strong>Example test.</strong> Point the feature at a host the scope permits and assert one fetch. Point it at a host the scope does not permit and assert no fetch and no stored side effect. Do not scan the internal network as the test.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://owasp.org/Top10/2021/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/">OWASP Top 10 2021 — A10 Server-Side Request Forgery</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP Server Side Request Forgery Prevention Cheat Sheet</a></li>
+<li><a href="https://portswigger.net/web-security/ssrf">PortSwigger — SSRF</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

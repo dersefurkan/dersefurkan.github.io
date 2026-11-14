@@ -259,6 +259,18 @@ code {
 }
 .catalog a, .study h3, .go { transition: color 0.2s ease, padding-left 0.2s ease; }
 .catalog a:hover { padding-left: 10px; }
+.page-title { font-family: var(--serif); font-size: clamp(40px, 6vw, 72px); line-height: 0.95; margin: 0 0 28px; }
+.prose h2 { font-size: clamp(26px, 3vw, 36px); margin: 36px 0 12px; }
+.prose p, .prose li { color: var(--muted); }
+.prose ul { margin: 0 0 8px; padding-left: 1.1em; }
+.prose li { margin: 8px 0; }
+.prose strong { color: var(--ink); font-weight: 500; }
+.prose a { color: var(--accent); border-bottom: 1px solid rgba(228, 245, 106, 0.35); }
+.catalog-index { list-style: none; margin: 28px 0 0; padding: 0; }
+.catalog-index li { border-top: 1px solid var(--line); }
+.catalog-index a { display: flex; gap: 16px; padding: 16px 0; }
+.catalog-index a:hover { color: var(--accent); }
+.catalog-index .mono { color: var(--faint); min-width: 2ch; }
 [id] { scroll-margin-top: 88px; }
 .lede { color: var(--muted); font-size: 18px; max-width: 46ch; margin-top: 24px; }
 .spec {

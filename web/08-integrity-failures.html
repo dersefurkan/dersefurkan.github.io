@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>8. Software and data integrity failures — Derse</title>
+  <meta name="description" content="8. Software and data integrity failures. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/web/">Web</a></p>
+    <h1 class="page-title">8. Software and data integrity failures</h1>
+    <p><strong>Description.</strong> The app trusts an update, a plugin, a deserialized blob, or a webhook body because it arrived, not because a check passed. The signature is missing, optional, or compared to a key the sender also sent.</p>
+<p><strong>Why it matters.</strong> The next deploy or the next webhook runs as the app. A green CI on the app&#x27;s own tests does not see a blob the pipeline did not build.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>For every webhook and update in scope, find the check that runs before the side effect.</li>
+<li>A check that can be skipped by omitting the signature header is not a check.</li>
+<li>The key must not travel in the same request as the blob.</li>
+<li>Invariant: a flipped byte, or a missing signature, does not change the stored state.</li>
+</ul>
+<p><strong>Example test.</strong> Send the scoped webhook with the signature removed, then with one byte of the body flipped and the old signature. Assert the record is unchanged both times.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://owasp.org/Top10/2021/A08_2021-Software_and_Data_Integrity_Failures/">OWASP Top 10 2021 — A08 Software and Data Integrity Failures</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html">OWASP Deserialization Cheat Sheet</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

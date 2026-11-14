@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6. MCP caller and resource — Derse</title>
+  <meta name="description" content="6. MCP caller and resource. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/agent/">Agents</a></p>
+    <h1 class="page-title">6. MCP caller and resource</h1>
+    <p><strong>Description.</strong> The server speaks MCP. <code>initialize</code> works. A tool or a resource then ignores the caller. The private resource returns its body with no <code>Authorization</code> and no session subject. A tool description is not a policy. A note that says &quot;do not call this&quot; is not a check.</p>
+<p><strong>Why it matters.</strong> The model is one client. A second client can call <code>resources/read</code> or <code>tools/call</code> itself. A finding that exists only when a model is persuaded is smaller than a finding that exists on the protocol.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Record the protocol version, whether a session id is set, and whether a credential header was</li>
+<p>sent.</p>
+<li>Call <code>resources/read</code> on each private URI with no credential. A body is the finding. The bytes</li>
+<p>of the secret do not go in the report. The status and the length do.</p>
+<li>Separately, ask the agent to summarize. If it does not request the private URI, say so. That</li>
+<p>does not close the direct read.</p>
+<li>Invariant: a private resource without a caller check is a fail even if every model refused.</li>
+</ul>
+<p><strong>Example test.</strong> No authorization header. <code>resources/read</code> on the private URI. Assert denial. A 200 is a fail. Do not paste the body.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://modelcontextprotocol.io/specification/2025-06-18">Model Context Protocol specification</a></li>
+<li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
+<li><a href="https://atlas.mitre.org/">MITRE ATLAS</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2. Indirect tool result — Derse</title>
+  <meta name="description" content="2. Indirect tool result. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/agent/">Agents</a></p>
+    <h1 class="page-title">2. Indirect tool result</h1>
+    <p><strong>Description.</strong> The user asked for a summary or a lookup. The next tool call matches text that came back from a document, a web page, an email, or a ticket, not the user. The tool result is data. The product treated it as a new order.</p>
+<p><strong>Why it matters.</strong> The attacker never talks to the agent. They write the document the agent was going to read. The effect still lands in the user&#x27;s name.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Put a benign extra sentence in a fixture document the scope allows. Do not publish the sentence.</li>
+<p>The test is the diff of the tool log against a clean copy of the same document.</p>
+<li>The user prompt stays fixed. Only the fixture changes.</li>
+<li>A harness line that says &quot;obey the document&quot; is not the product. Run the product&#x27;s own system</li>
+<p>text.</p>
+<li>Invariant: the write, the payment, or the mail exists only when the user asked for it.</li>
+</ul>
+<p><strong>Example test.</strong> Two runs, same user prompt, &quot;summarize this&quot;. Run A has a plain fixture. Run B has the same fixture plus an instruction to call a write tool. Assert the write count is equal, and that count is zero if the user did not ask for a write.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/2406.13352">AgentDojo, arXiv:2406.13352</a> — the instruction lives in the tool result. Utility is the environment check.</li>
+<li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
+<li><a href="https://portswigger.net/web-security/llm-attacks">PortSwigger — Web LLM attacks</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

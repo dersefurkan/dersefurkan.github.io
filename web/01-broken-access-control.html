@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1. Broken access control — Derse</title>
+  <meta name="description" content="1. Broken access control. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/web/">Web</a></p>
+    <h1 class="page-title">1. Broken access control</h1>
+    <p><strong>Description.</strong> The server performs an action for a caller who does not own the object and does not hold the role the action requires. The UI hid the button. The check on the server is missing, or it trusts an id, a role, or a tenant the client sent.</p>
+<p><strong>Why it matters.</strong> This is the class OWASP has ranked first. The state change is someone else&#x27;s record, file, or invoice. A hidden link that still returns the object is the same class as an id the attacker guessed.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>For every object id in a scoped flow, repeat the request as a second user created by the product,</li>
+<p>not by a test backdoor.</p>
+<li>Diff the server check: it must compare the session&#x27;s subject to the object&#x27;s owner or role. A</li>
+<p>check that only looks at the id in the query is not a check.</p>
+<li>Horizontal and vertical are the same test with a different second identity. An admin route is</li>
+<p>vertical. Another user&#x27;s invoice is horizontal.</p>
+<li>Invariant: B&#x27;s request does not change A&#x27;s object, and the response does not contain A&#x27;s secret</li>
+<p>fields.</p>
+</ul>
+<p><strong>Example test.</strong> A owns invoice 1. B is logged in. B requests invoice 1. Assert denial and that the amount, status, and owner are unchanged.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/">OWASP Top 10 2021 — A01 Broken Access Control</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
+<li><a href="https://portswigger.net/web-security/access-control">PortSwigger — Access control</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3. Unchecked tool argument — Derse</title>
+  <meta name="description" content="3. Unchecked tool argument. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/agent/">Agents</a></p>
+    <h1 class="page-title">3. Unchecked tool argument</h1>
+    <p><strong>Description.</strong> The tool runs the argument the model produced. It does not compare the argument to the caller. A <code>user_id</code>, a path, a tenant, or an amount is whatever the model wrote. This is the confused deputy: the tool&#x27;s authority is the server&#x27;s, and the choice was the text&#x27;s.</p>
+<p><strong>Why it matters.</strong> The model can be &quot;helpful&quot; and the tool is still wrong. Filtering the prompt does not fix a tool that never looks at the session.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Open the tool implementation. Find the parameter that names an object. Find the line that binds</li>
+<p>it to the session. If that line is missing, the class is present whether or not a model is attached.</p>
+<li>Call the tool directly, as the server would, with the caller&#x27;s session and another object&#x27;s id.</li>
+<li>Invariant: the other object is unchanged, and the response is a denial.</li>
+</ul>
+<p><strong>Example test.</strong> Session is tenant A. Call the read tool with tenant B&#x27;s id, the way the agent would. Assert denial. Repeat through the chat only after the direct call is understood. The chat run shows whether the model will produce the bad argument. The direct call shows whether the tool would honor it.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
+<li><a href="https://atlas.mitre.org/">MITRE ATLAS</a></li>
+<li><a href="https://modelcontextprotocol.io/specification/2025-06-18">Model Context Protocol specification</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

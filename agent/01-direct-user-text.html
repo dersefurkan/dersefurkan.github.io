@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1. Direct user text — Derse</title>
+  <meta name="description" content="1. Direct user text. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/agent/">Agents</a></p>
+    <h1 class="page-title">1. Direct user text</h1>
+    <p><strong>Description.</strong> The user&#x27;s sentence is the only order the tool sees. There is no second check of who is allowed to move the money, send the mail, or delete the row. The model is obedient, and the tool is open.</p>
+<p><strong>Why it matters.</strong> A chat box becomes an admin console. The finding is the tool call and the state, not a rude reply.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>List the tools the scoped endpoint can call. Mark which ones change state.</li>
+<li>Send one in-scope request that names a legal action, and one that names an action the role must</li>
+<p>not have.</p>
+<li>Read the tool log. The argument and the caller&#x27;s identity are both required.</li>
+<li>Invariant: the forbidden action does not change the ledger, the mailbox, or the row.</li>
+</ul>
+<p><strong>Example test.</strong> A normal user asks the agent to export another user&#x27;s records. Assert no export file and no tool call that reads that user. A same-user request that the product allows may succeed. That success is the control case, not the finding.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
+<li><a href="https://atlas.mitre.org/">MITRE ATLAS</a></li>
+<li><a href="https://arxiv.org/abs/2406.13352">AgentDojo, arXiv:2406.13352</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>

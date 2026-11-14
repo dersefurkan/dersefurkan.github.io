@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>9. Security logging and monitoring failures — Derse</title>
+  <meta name="description" content="9. Security logging and monitoring failures. A class note from an independent security review. The proof is the state after the action.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="brand-name">Derse</span>
+      <span class="brand-meta">security review</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+      <span class="when-closed">Menu</span>
+      <span class="when-open">Close</span>
+    </button>
+    <div id="nav-panel" class="nav-panel">
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#surfaces">Surfaces</a></li>
+          <li><a href="/web/">Web</a></li>
+          <li><a href="/agent/">Agents</a></li>
+          <li><a href="/#work">Evidence</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+    </div>
+  </div>
+</header>
+
+  <main id="content" class="wrap section prose">
+    <p class="kicker"><a href="/web/">Web</a></p>
+    <h1 class="page-title">9. Security logging and monitoring failures</h1>
+    <p><strong>Description.</strong> A sensitive action succeeds and the server log does not say who did it, or the log line contains the password, the session, or the card number. Both are failures. Silence hides the action. A secret in the log publishes it to everyone who can read logs.</p>
+<p><strong>Why it matters.</strong> The review can show the state change and still leave the operator blind the next time. The pack records whether the log exists. It does not claim a SOC was built.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Perform one scoped sensitive action. Read the server log, not the browser console.</li>
+<li>The line needs the actor, the object, and the result. It does not need the secret.</li>
+<li>A log that only exists when a debug flag is on is not the default.</li>
+<li>Invariant: the action is present, and a search of that line for the submitted secret fails.</li>
+</ul>
+<p><strong>Example test.</strong> Log in with a known password and fail once. Read the auth log. Assert the failure is recorded and the password string is absent.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://owasp.org/Top10/2021/A09_2021-Security_Logging_and_Monitoring_Failures/">OWASP Top 10 2021 — A09 Security Logging and Monitoring Failures</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">OWASP Logging Cheat Sheet</a></li>
+</ul>
+    <p class="sub"><a href="/">Back to the shop</a></p>
+  </main>
+  
+<script>
+(function () {
+  var btn = document.querySelector(".nav-toggle");
+  var panel = document.getElementById("nav-panel");
+  if (!btn || !panel) return;
+  function setOpen(open) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+  panel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+</script>
+
+</body>
+</html>
