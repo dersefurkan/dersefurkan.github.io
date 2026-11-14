@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8. Admin call without the owner check — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-web3">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li><li><a href="/web/">Web</a></li><li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li><li><a href="/tests/">Tests</a></li><li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Web3%20surface">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/web3/">Web3</a></p>
+<h1 class="page-title">8. Admin call without the owner check</h1>
+<p><strong>Description.</strong> A function sets a fee, an oracle, a guardian, or withdraws stranded tokens. The name says admin. The body does not compare the caller to the owner or the role.</p>
+<p><strong>Why it matters.</strong> Anyone who can send a transaction can take the role. The rest of the review’s assumptions about “only the owner” are then false.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>List functions that write configuration or move tokens that are not a user’s own balance.</li>
+<li>Each one needs a caller check. A comment is not a check. A check on a different function is not this function’s check.</li>
+<li>Invariant: a transaction from an unmarked account does not change the fee, the oracle, or the owner.</li>
+</ul>
+<p><strong>Example test.</strong> Call the setter from an account that is not the owner. Assert revert and that the stored value is unchanged. Call it from the owner. Assert the value moved.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://swcregistry.io/docs/SWC-105">SWC-105 Unprotected Ether Withdrawal</a> and <a href="https://swcregistry.io/docs/SWC-106">SWC-106 Unprotected SELFDESTRUCT</a> are the neighboring classes. The check is the same shape: the caller is not verified.</li>
+</ul>
+<p class="sub">A hired review writes the finding, this assertion as evidence, and the fix. The test stays in the private repo. It is not a watcher on the chain. <a href="/web3/">All web3 classes</a></p>
+</main></body></html>

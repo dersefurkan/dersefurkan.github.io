@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. Split ledger — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-web3">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li><li><a href="/web/">Web</a></li><li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li><li><a href="/tests/">Tests</a></li><li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Web3%20surface">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/web3/">Web3</a></p>
+<h1 class="page-title">1. Split ledger</h1>
+<p><strong>Description.</strong> One deposit is supposed to credit two stores: a cash ledger and a share ledger, or a vault and a queue. One write lands. The other does not. The protocol’s story of the balance and the code’s stores disagree.</p>
+<p><strong>Why it matters.</strong> Withdrawals read one store and redemptions read the other. The gap is value that exists in the story and not in the cash, or cash that no share can claim.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Name the two stores the deposit must touch. Read both after one call.</li>
+<li>A test that only checks the return value does not see the second store.</li>
+<li>Invariant: after a deposit of X, store A increased by X and store B increased by the matching units. After a full withdrawal, both are back.</li>
+</ul>
+<p><strong>Example test.</strong> Deposit a known amount. Assert both balances. Withdraw all. Assert both are unchanged from the start. The broken variant fails the second store. The patch makes both asserts hold.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li>The teaching repo <a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a>.</li>
+<li><a href="https://swcregistry.io/docs/SWC-105">SWC-105 Unprotected Ether Withdrawal</a> is a different bug. It is listed so the withdrawal check is not confused with a split ledger.</li>
+</ul>
+<p class="sub">A hired review writes the finding, this assertion as evidence, and the fix. The test stays in the private repo. It is not a watcher on the chain. <a href="/web3/">All web3 classes</a></p>
+</main></body></html>

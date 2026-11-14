@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. Signature replay — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-web3">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li><li><a href="/web/">Web</a></li><li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li><li><a href="/tests/">Tests</a></li><li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Web3%20surface">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/web3/">Web3</a></p>
+<h1 class="page-title">6. Signature replay</h1>
+<p><strong>Description.</strong> A signature authorizes an action. Nothing in the signed payload, or nothing stored after use, stops the same signature from working again, on another chain, or for another contract.</p>
+<p><strong>Why it matters.</strong> The user signed once. The action runs twice. The missing field is usually a nonce, a chain id, or the contract address.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>List the fields inside the signed hash. Nonce, chain id, and verifying contract must be there.</li>
+<li>Find the stored bit that flips when the signature is consumed.</li>
+<li>Invariant: the same signature, submitted twice, changes state only once.</li>
+</ul>
+<p><strong>Example test.</strong> Submit a valid signature. Submit it again. Assert the second call reverts and the balance moved only on the first.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://eips.ethereum.org/EIPS/eip-712">EIP-712</a> defines the domain separator that binds chain id and verifying contract.</li>
+<li><a href="https://swcregistry.io/docs/SWC-121">SWC-121 Missing Protection against Signature Replay</a>.</li>
+</ul>
+<p class="sub">A hired review writes the finding, this assertion as evidence, and the fix. The test stays in the private repo. It is not a watcher on the chain. <a href="/web3/">All web3 classes</a></p>
+</main></body></html>

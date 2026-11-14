@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web3 — Derse</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
-</head>
-<body class="tone-web3">
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-web3">
 <header class="site-header"><div class="wrap header-inner">
 <a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
 <nav class="nav" aria-label="Primary"><ul>
@@ -18,29 +15,23 @@
 <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Web3%20surface">Send the surface</a>
 </div></header>
 <main id="content" class="wrap section prose">
-<p class="kicker">Web3</p>
+<p class="kicker"><a href="/">Shop</a></p>
 <h1 class="page-title">The identity that moves the money.</h1>
-<p class="lede">One contract family, or one diff under 800 lines. The review asks which number the protocol believes, and which store the code actually updates. A green suite means those properties held. It is not an audit stamp.</p>
-<h2>What this surface is against</h2>
-<ul>
-<li>A deposit credited on one ledger and missing on the other.</li>
-<li>A share price that the first depositor can inflate.</li>
-<li>A fee taken on the balance instead of the gain.</li>
-<li>An upgrade that keeps the old storage layout and reads the wrong slot.</li>
-<li>A proof gate that accepts a journal the application did not bind.</li>
-</ul>
-<h2>What you send</h2>
-<p>The repo or the diff, the chain if a fork is in scope, and the one identity you care about: shares, receipts, a queue cursor, a fee base. A second system is a second pack.</p>
-<h2>What you get</h2>
-<p>A report. Each finding, the evidence, and the fix. On this surface the evidence is a Foundry test that fails on the bug and passes on the patch, because a contract bug comes back when the test is missing. That test stays in a private repo. It is not a service that scans the chain after we leave. Fourteen days to re-run the same tests.</p>
+<p class="lede">One contract family, or one diff under 800 lines. We test the identity that moves value and write the report. Each finding has a test that fails before the patch and passes after. That test stays in a private repo. It is not a service that scans the chain after we leave.</p>
+<h2>Eight classes</h2>
+<ol class="catalog-index"><li><a href="/web3/01-split-ledger.html"><span class="mono">01</span> 1. Split ledger</a></li>
+<li><a href="/web3/02-share-inflation.html"><span class="mono">02</span> 2. First depositor share inflation</a></li>
+<li><a href="/web3/03-fee-on-gain.html"><span class="mono">03</span> 3. Fee on the balance, not the gain</a></li>
+<li><a href="/web3/04-storage-layout.html"><span class="mono">04</span> 4. Upgrade reads the wrong slot</a></li>
+<li><a href="/web3/05-call-before-state.html"><span class="mono">05</span> 5. External call before state update</a></li>
+<li><a href="/web3/06-signature-replay.html"><span class="mono">06</span> 6. Signature replay</a></li>
+<li><a href="/web3/07-price-source.html"><span class="mono">07</span> 7. Price the caller can move, or a stale price</a></li>
+<li><a href="/web3/08-missing-owner-check.html"><span class="mono">08</span> 8. Admin call without the owner check</a></li></ol>
 <h2>Teaching repos</h2>
 <ul>
-<li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a> — one deposit, two ledgers, then the patched invariants.</li>
-<li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">pool-invariant-suite-demo</a> — inflation and fee creep, handler invariants on the fixed contracts.</li>
-<li><a href="/zk/">zk classes</a> — when the money moves because a proof was accepted.</li>
+<li><a href="https://github.com/dersefurkan/split-ledger-vault-demo">split-ledger-vault-demo</a></li>
+<li><a href="https://github.com/dersefurkan/pool-invariant-suite-demo">pool-invariant-suite-demo</a></li>
+<li><a href="/zk/">zk classes</a>, when the money moves because a proof was accepted.</li>
 </ul>
-<p>Run <code>forge test</code> in the teaching repos. They are constructed so a property fails and then holds. They are not findings against a live protocol.</p>
-<p class="sub"><a href="/agreements/">Sample scope</a> · <a href="/">Shop</a></p>
-</main>
-</body>
-</html>
+<p class="sub"><a href="/agreements/">Sample scope</a> · <a href="/tests/">Tests</a> · <a href="/">Shop</a></p>
+</main></body></html>
