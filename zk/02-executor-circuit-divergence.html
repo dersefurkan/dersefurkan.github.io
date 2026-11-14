@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. Executor ↔ circuit divergence — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">2. Executor ↔ circuit divergence</h1>
+<p><strong>Description.</strong> A zkVM has two definitions of &quot;what happened&quot;: the executor (native/RV32IM semantics) and the constraint system that proves the execution. Where the two disagree — ignored ELF permission flags, reserved-memory conventions, division-by-zero behavior, register <code>x0</code> handling — an execution can be *provable* that could never occur on real hardware, or a real execution can become *unprovable*.</p>
+<p><strong>Why it matters.</strong> Divergence is a soundness hazard in one direction (a malicious prover proves an &quot;infeasible&quot; execution — e.g. a write to a read-only segment succeeds in the zkVM but faults on real RISC-V) and a completeness/liveness hazard in the other (honest executions cannot be proven). For guest developers it also breaks the mental model &quot;if it runs correctly in tests, the proof means the same thing&quot;: unit tests exercise the executor, not the constraints.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Boundary to diff: platform semantics versus real ISA behavior. Ask for every documented (or</li>
+</ul>
+<p>undocumented) deviation: &quot;is the execution the zkVM proves feasible on actual hardware?&quot; If the difference is undocumented, it is finding-shaped.</p>
+<ul>
+<li>Check the ELF/image loader as the place where initial state is defined: are segment <code>vaddr</code>s</li>
+</ul>
+<p>confined to user memory? Is word alignment enforced? Are <code>p_flags</code> (PF_X/PF_W/PF_R) applied or ignored? Are all offset sums overflow-checked *in release builds* (where overflow does not panic)?</p>
+<ul>
+<li>Arithmetic edge cases where executor and circuit conventions must match: division/remainder by</li>
+</ul>
+<p>zero (RV32IM returns <code>q = -1, r = n</code> rather than faulting), signed overflow, sign extension.</p>
+<ul>
+<li>Test method: differential execution — run the same guest natively (or in a reference emulator)</li>
+</ul>
+<p>and under the zkVM executor on adversarial inputs, and diff results, faults, and committed outputs.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/veridise_zkVM_20250224.pdf">Veridise — RISC Zero zkVM Round 2</a> —</li>
+</ul>
+<p>V-RISC0-VUL-022 (ELF <code>PT_LOAD</code> permission flags ignored: read-only segments are writable in the zkVM while Linux would fault — &quot;infeasible executions&quot; become provable) and V-RISC0-VUL-024 (release-build offset overflow in <code>load_elf</code> wraps to the start of the file).</p>
+<ul>
+<li><a href="https://github.com/advisories/GHSA-f6rc-24x4-ppxp">GHSA-f6rc-24x4-ppxp / CVE-2025-54873</a> —</li>
+</ul>
+<p>signed integer division underconstrained: multiple outputs valid for some inputs; division-by-zero results underconstrained.</p>
+<ul>
+<li><a href="https://blog.lambdaclass.com/the-future-of-zk-is-in-risc-v-zkvms-but-the-industry-must-be-careful-how-succincts-sp1s-departure-from-standards-causes-bugs/">LambdaClass — The future of ZK is in RISC-V zkVMs, but the industry must be careful</a> —</li>
+</ul>
+<p>how departures from the RISC-V standard (register <code>x0</code> / memory-register handling) produce bugs.</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/zellic.pdf">Zellic — SP1 Design Review</a> —</li>
+</ul>
+<p>RISC-V standards-compliance review, including reserved memory regions and deviation risk.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. Journal / public-values binding gap — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">3. Journal / public-values binding gap</h1>
+<p><strong>Description.</strong> The journal (RISC Zero) or public values (SP1) are the only channel through which a guest&#x27;s output reaches the onchain verifier. A binding gap exists when the proof is valid but the values the application acts on are not fully committed to the claim being verified — fields consumed from calldata instead of the journal, digest comparisons that check only the first word, or batch commitments built from order-insensitive (commutative) hashes.</p>
+<p><strong>Why it matters.</strong> This is the highest-impact class at the application boundary: the cryptography is fine, the guest ran correctly, and yet an attacker swaps *context*. In the Boundless market audit, an unverified <code>RequestId</code>↔<code>requestDigest</code> link let a PoC swap two IDs in a batch and charge another party&#x27;s account; a commutative batch root let an attacker permute <code>imageId</code>/<code>journal</code> fields and deliver a bogus fulfillment. In recursive verifiers, checking only the first word of a <code>deferred_proofs_digest</code> leaves the remaining words free for the prover to choose.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>For every value the onchain contract consumes, trace it into the proof&#x27;s commitment: is the</li>
+</ul>
+<p>journal hash part of the verified claim (RISC Zero) or the public-values digest (SP1)? Is any security-relevant field taken from calldata instead?</p>
+<ul>
+<li>Grep the verifier for comparison patterns: <code>for</code> loops over digest words versus single-element</li>
+</ul>
+<p>checks (<code>digest[0]</code>, <code>first_word</code>), early-exit comparisons, truncated byte comparisons.</p>
+<ul>
+<li>In batch/aggregation structures, ask whether leaf *order* is meaningful; if yes, the commitment</li>
+</ul>
+<p>scheme must be order-sensitive (commutative hashes are not).</p>
+<ul>
+<li>Invariant to test: changing any bit of any field the application consumes must change the claim</li>
+</ul>
+<p>being verified — write the test that flips each field and expects verification to fail.</p>
+<ul>
+<li>Boundary to diff: the guest&#x27;s journal encoding (Rust struct → bytes) versus the contract&#x27;s</li>
+</ul>
+<p>decoding (<code>abi.decode</code> offsets). Length-prefix, padding, and endianness mismatches are binding bugs too.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/boundless/veridise-boundless-250404.pdf">Veridise — Boundless Market Beta audit (Apr 2025)</a> —</li>
+</ul>
+<p>V-RISC0-VUL-001 (Critical: <code>RequestId</code> not validated against <code>requestDigest</code> in fulfillment functions), V-RISC0-VUL-002 (High: commutative batch root permits permuting <code>imageId</code>/<code>journal</code> leaves).</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/veridise.pdf">Veridise — SP1 audit</a> —</li>
+</ul>
+<p>V-SP1-VUL-004 (High): recursive verifier checks only the first word of <code>deferred_proofs_digest</code> across shards.</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/rkm0959.md">rkm0959 — SP1 V3 audit</a> —</li>
+</ul>
+<p>finding #7: exit code checked on the first shard only instead of &quot;0 on all shards&quot;.</p>
+<ul>
+<li><a href="https://code4rena.com/reports/2025-09-succinct">Code4rena — Succinct audit (Sep 2025)</a> —</li>
+</ul>
+<p>public-values handling findings, including truncated <code>public_values</code> behavior.</p>
+<ul>
+<li><a href="https://reports.zksecurity.xyz/reports/risc0-helios/">zkSecurity — R0VM Helios audit</a> — the</li>
+</ul>
+<p>positive pattern: genesis root and fork IDs are passed into the guest so the committed output is bound to the correct chain context.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

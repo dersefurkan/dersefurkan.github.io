@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10. Wrapper / trusted-setup binding gaps (Groth16/PLONK) — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">10. Wrapper / trusted-setup binding gaps (Groth16/PLONK)</h1>
+<p><strong>Description.</strong> Most zkVM pipelines end by wrapping a STARK in a Groth16 or PLONK proof for cheap onchain verification. That last mile re-introduces its own assumptions: public inputs must be range-checked against the *scalar* field (not the base field), the trusted setup (SRS) actually used must be the production one, and commitment extensions must bind what they claim to bind.</p>
+<p><strong>Why it matters.</strong> RISC Zero&#x27;s snarkjs-generated verifier checked public inputs against the wrong field, leaving roughly <code>q - r</code> (≈ 1.48 × 10³⁸) alias values accepted as valid public inputs — a public-input aliasing hole in the contract everyone routes proofs through. SP1&#x27;s Go verifier builder silently selected an unsafe SRS whenever the data-directory path contained the substring &quot;dev&quot;. And gnark&#x27;s Groth16 commitment extension was independently broken twice (zero-knowledge and soundness), showing that wrapper conveniences are new cryptography, not free features.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>In generated or hand-written verifier contracts, check every public-input range check: which</li>
+</ul>
+<p>field modulus is it compared against? (For BN254 Groth16: scalar field <code>r</code>, not base field <code>q</code>.)</p>
+<ul>
+<li>Inventory how the SRS / proving key is selected: string matches on paths, environment variables,</li>
+</ul>
+<p>feature flags. Can a production deployment trip the dev/test branch?</p>
+<ul>
+<li>Commitment/translation layers between the STARK and the SNARK (compressed proof digests, public</li>
+</ul>
+<p>value commitments): verify the binding is complete — every public value accounted for, no free words.</p>
+<ul>
+<li>Cross-check the wrapper&#x27;s verification key provenance: is the vk baked into the contract/verifier</li>
+</ul>
+<p>tied to the ceremony/setup the deployment claims to use?</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/contracts/hexens_verifiercontract_20240605.pdf">Hexens — RISC Zero SNARK Verifier Contract audit (Jun 2024)</a> —</li>
+</ul>
+<p>SCRI-3 (High): <code>Groth16Verifier.checkField</code> checked public inputs against the base field instead of the scalar field, accepting ≈ 1.48 × 10³⁸ alias values.</p>
+<ul>
+<li><a href="https://www.zellic.io/blog/gnark-bug-groth16-commitments">Zellic — Two Vulnerabilities in gnark&#x27;s Groth16 Proofs with Commitments</a></li>
+</ul>
+<p>and <a href="https://github.com/Consensys/gnark/security/advisories/GHSA-q3hw-3gm4-w5cr">gnark GHSA-q3hw-3gm4-w5cr</a> — commitment extension unsound with more than one commitment.</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/veridise.pdf">Veridise — SP1 audit</a> —</li>
+</ul>
+<p>V-SP1-VUL-003 (High): unsafe SRS selected whenever the data-directory path contains &quot;dev&quot;; V-SP1-VUL-006: shard indexes not range-checked in <code>verify_shard</code>.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/groth16/zksecurity_groth16.pdf">zkSecurity — RISC Zero Groth16 verifier audit</a> —</li>
+</ul>
+<p>audit of the STARK→Groth16 wrapper used for onchain verification.</p>
+<ul>
+<li><a href="https://blog.lambdaclass.com/responsible-disclosure-of-an-exploit-in-succincts-sp1-zkvm-found-in-partnership-with-3mi-labs-and-aligned-which-arises-from-the-interaction-of-two-distinct-security-vulnerabilities/">LambdaClass — Responsible disclosure of an exploit in Succinct&#x27;s SP1 zkVM</a></li>
+</ul>
+<p>and the <a href="https://blog.succinct.xyz/sp1-security-update-1-27-25/">Succinct security update</a> — two interacting bugs (missing verifier checks; underconstrained <code>is_complete</code> in the recursion layer) composing into universal compressed-proof forgery, documented in <a href="https://github.com/succinctlabs/sp1/security/advisories/GHSA-c873-wfhp-wx5m">GHSA-c873-wfhp-wx5m</a>.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

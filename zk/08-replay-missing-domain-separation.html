@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8. Replay &amp; missing domain separation at verification — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">8. Replay &amp; missing domain separation at verification</h1>
+<p><strong>Description.</strong> A proof, receipt, or signature that is valid in one context must not be valid in another. The failures are mechanical: no nonce or uniqueness tag in the journal, the same typed digest signed by two different roles, zero/sentinel digests accepted as real commitments, and accumulator verifiers that cannot tell a leaf from an intermediate node.</p>
+<p><strong>Why it matters.</strong> In the Boundless market, the absence of domain separation between client and prover signatures let a <code>clientSignature</code> be passed as a <code>proverSignature</code> (self-locking griefing), and the set verifier accepted an intermediate MMR node — even the root — as if it were a proven <code>claimDigest</code>. In Steel, a crafted commitment with a zero digest was accepted as valid even though a zero digest corresponds to no block at all. Each of these is a valid proof or signature doing work it was never bound to do.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Ask of every accepted proof/signature: what stops it from being replayed — across requests,</li>
+</ul>
+<p>across chains, across contract upgrades, across roles? Look for nonces, request IDs, chain IDs, and consumed/nullifier tracking.</p>
+<ul>
+<li>Sentinel hygiene: wherever <code>bytes32(0)</code> / <code>Digest::ZERO</code> can appear, is it explicitly rejected</li>
+</ul>
+<p>where a real commitment is required? Is the same zero value overloaded for &quot;none&quot;, &quot;empty&quot;, and &quot;valid&quot; (a collision of meanings)?</p>
+<ul>
+<li>Accumulator/set verifiers: are leaves tagged or hashed differently from internal nodes? Try</li>
+</ul>
+<p>submitting an intermediate node (or the root) with a partial path.</p>
+<ul>
+<li>If two roles sign the same message shape, test cross-role replay directly.</li>
+</ul>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/boundless/veridise-boundless-250404.pdf">Veridise — Boundless Market Beta audit</a> —</li>
+</ul>
+<p>V-RISC0-VUL-004 (Medium): <code>RiscZeroSetVerifier</code> does not distinguish MMR leaves from intermediate nodes; V-RISC0-VUL-005 (Medium): no domain separation between client and prover signatures.</p>
+<ul>
+<li><a href="https://github.com/advisories/GHSA-gjv3-89hh-9xq2">GHSA-gjv3-89hh-9xq2 / CVE-2025-52884</a> —</li>
+</ul>
+<p><code>Steel.validateCommitment</code> returned <code>true</code> for a crafted commitment whose digest is zero.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/veridise_zkVM_20250224.pdf">Veridise — RISC Zero zkVM Round 2</a> —</li>
+</ul>
+<p>V-RISC0-VUL-023: <code>Digest::ZERO</code> simultaneously encodes <code>None</code>, empty arrays, and empty tagged iterations; <code>tagged_iter</code> produces the same digest regardless of tag.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/steel/veridise_steel_250414.pdf">Veridise — Steel audits</a> —</li>
+</ul>
+<p>commitment validation in the Steel coprocessor library (see also the <a href="https://github.com/risc0/risc0-ethereum/blob/main/crates/steel/README.md">Steel README</a>).</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

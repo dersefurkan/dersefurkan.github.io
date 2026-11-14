@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. Memory &amp; timestamp argument assumptions — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">6. Memory &amp; timestamp argument assumptions</h1>
+<p><strong>Description.</strong> zkVM memory consistency rests on arguments the guest never sees: timestamp/address ordering, initialization tables, and allocator invariants. Guest programs that step outside the safe Rust surface — raw syscalls, inline <code>ecall</code>s, custom or embedded allocators, hand-rolled memory regions — inherit assumptions about this machinery that the circuits may not actually enforce.</p>
+<p><strong>Why it matters.</strong> When the memory argument breaks, the prover fabricates memory contents and the entire execution trace becomes fiction — the deepest soundness failure a VM has. The same assumption gaps bite applications directly: SP1&#x27;s embedded allocator had a pointer-overflow and a heap-overlap flaw reachable from ordinary guest allocation patterns, and RISC Zero&#x27;s <code>ecall_software</code> could be driven into billions of unintended stores by an overflowed <code>ptr + len</code> sum.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Treat every use of <code>unsafe</code>, custom <code>#[global_allocator]</code>, inline assembly, and direct</li>
+</ul>
+<p><code>ecall</code>/<code>syscall</code> in a guest as an audit boundary: which memory-model invariant does the code rely on, and where is that invariant enforced (guest, executor, or circuit)?</p>
+<ul>
+<li>Allocator review: pointer arithmetic overflow (<code>ptr + len</code>, <code>align_up</code>), heap bounds versus</li>
+</ul>
+<p>reserved regions (<code>_end</code> versus reserved input/stack areas), initialization state.</p>
+<ul>
+<li>At the VM layer, the recurring shapes are: double-initialization of global memory tables,</li>
+</ul>
+<p>unconstrained &quot;is this a memory op&quot; selector bits, and interaction kinds that fail to distinguish memory from syscall events.</p>
+<ul>
+<li>Invariant to test: every byte the guest reads was written by this execution (or is committed</li>
+</ul>
+<p>initial image), and timestamps/addresses are monotone where the argument requires it.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/kalos.md">KALOS — SP1 Recursion VM audit</a> —</li>
+</ul>
+<p>poseidon2-chip arbitrary memory write with underconstrained hash (Critical); <code>MemoryGlobalChip</code> double-initialization breaking the memory argument (High).</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/sp1-v4.md">rkm0959 — SP1 V4 audit</a> — CPU</li>
+</ul>
+<p><code>is_memory</code> selector underconstrained; <code>GlobalChip</code> <code>InteractionKind</code> not included in the digest (memory ↔ syscall event confusion).</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/security/advisories/GHSA-6248-228x-mmvh">GHSA-6248-228x-mmvh</a> —</li>
+</ul>
+<p>embedded allocator: <code>read_vec_raw</code> pointer overflow; heap <code>_end</code> allowed past the reserved input region.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/veridise_zkVM_20250224.pdf">Veridise — RISC Zero zkVM Round 2</a> —</li>
+</ul>
+<p>V-RISC0-VUL-010: <code>into_guest_ptr + into_guest_len</code> without safe math; overflow bypasses the check and triggers billions of stores (proving-service DoS).</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

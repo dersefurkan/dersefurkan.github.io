@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. Underconstrained guest input — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">1. Underconstrained guest input</h1>
+<p><strong>Description.</strong> In a zkVM, the host (or prover) that executes the guest program is fully untrusted: every byte delivered via <code>env::read()</code> / <code>sp1_zkvm::io::read()</code>, every syscall return value, and every hinted length is chosen by the prover. The proof only attests that *some* execution of the guest was valid — if the guest consumes host data without re-validating it, the prover effectively chooses the program&#x27;s inputs and, through them, its outputs.</p>
+<p><strong>Why it matters.</strong> A malicious prover can feed crafted inputs that steer the guest into committing wrong results to the journal — and the resulting proof still verifies onchain. At the VM boundary this goes further: RISC Zero&#x27;s <code>sys_read</code> channel allowed a crafted host response to write into arbitrary guest memory (CVE-2025-61588), compromising every guest program that used it. For proving services (Bonsai, Boundless, prover networks), unchecked <code>count</code>/<code>len</code> arguments are also a direct denial-of-service and cost-amplification vector against the prover.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>Enumerate every host→guest channel: grep the guest for <code>env::read</code>, <code>io::read</code>, <code>read_slice</code>,</li>
+</ul>
+<p><code>read_vec</code>, <code>stdin</code>, and any raw <code>ecall</code>. For each one ask: what does the guest *recompute or re-check* versus trust?</p>
+<ul>
+<li>Check syscall implementations at the executor level (not just the library level — guests can call</li>
+</ul>
+<p>ecalls directly, bypassing library checks): are all guest-supplied pointers inside the user memory region? Is <code>ptr + len</code> computed with checked arithmetic? Are <code>count</code> parameters capped (e.g. <code>MAX_SHA_COMPRESS_BLOCKS</code>)?</p>
+<ul>
+<li>Invariant to test: for every input <code>x</code> the host supplies, there exists a guest-side predicate</li>
+</ul>
+<p><code>validate(x)</code> whose failure aborts execution *before* <code>x</code> influences committed output.</p>
+<ul>
+<li>Boundary to diff: what the host *could* send (arbitrary bytes) versus what the guest *accepts*</li>
+</ul>
+<p>(the validated subset). The gap is the attack surface.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/advisories/GHSA-jqq4-c7wq-36h7">GHSA-jqq4-c7wq-36h7 / CVE-2025-61588</a> —</li>
+</ul>
+<p>crafted host <code>sys_read</code> response writes to arbitrary guest memory; arbitrary code execution in the guest.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/hexens_zkVM_20231031.pdf">Hexens — RISC Zero zkVM audit (Oct 2023)</a> —</li>
+</ul>
+<p>RSC0-5 (ecall pointer parameters escape user-space memory checks), RSC0-10 (unchecked <code>buf_ptr + buf_len</code>), RSC0-3 (direct-assembly <code>ecall_sha</code> with <code>count=10000</code> → 130GB+ memory inflation, prover DoS).</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/veridise_zkVM_20250224.pdf">Veridise — RISC Zero zkVM Round 2 (Feb 2025)</a> —</li>
+</ul>
+<p>V-RISC0-VUL-010: <code>ecall_software</code> allocates the <code>to_guest</code> vector *before* checking its address, with a non-overflow-safe <code>into_guest_ptr + into_guest_len</code> sum.</p>
+<ul>
+<li><a href="https://sigmaprime.io/blog/sp1-zkvm-security-guide/">Sigma Prime — SP1 and zkVMs: A Security Auditor&#x27;s Guide</a> —</li>
+</ul>
+<p>host/guest trust boundary: &quot;the proof only proves the guest&quot;, so critical logic must live in the guest and validate its inputs.</p>
+<ul>
+<li><a href="https://docs.succinct.xyz/docs/sp1/security/security-model">SP1 Security Model</a> — vendor</li>
+</ul>
+<p>documentation of which user programs count as safe and what the guest must enforce itself.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

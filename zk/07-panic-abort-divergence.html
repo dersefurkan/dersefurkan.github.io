@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. Panic/abort divergence between native and proven execution — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">7. Panic/abort divergence between native and proven execution</h1>
+<p><strong>Description.</strong> A panic in a guest program is not a crash — it is a state for which *no valid proof exists*. Any panic path an attacker can reach from onchain state (an empty epoch, a zero denominator, a crafted event) becomes a liveness failure: the honest prover cannot produce the proof the protocol needs to progress. The mirror-image bug lives onchain: verifiers that accept a proof without checking its exit code treat *aborted* executions as successful ones.</p>
+<p><strong>Why it matters.</strong> In RISC Zero&#x27;s PoVW system, an attacker could force a division-by-zero panic in the <code>mint-calculator</code> guest; because commit roots form a chain, one poisoned <code>workLogId</code> blocked every future proof and froze the epoch for all users — and a separate unbounded loop over the journal&#x27;s <code>updates</code> array let an attacker inflate the journal past the block gas limit, making epoch payouts impossible to finalize onchain. No cryptography was broken; the arithmetic edge case was enough.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>List every panic point in the guest (<code>unwrap</code>, <code>expect</code>, <code>assert!</code>, division, indexing,</li>
+</ul>
+<p><code>unwrap_or_else(|| panic!(...))</code>). For each one ask: can an attacker create this condition via chain state or inputs? Pay special attention to division denominators and empty-collection edge cases.</p>
+<ul>
+<li>In chained/aggregated designs (commit-root chains, epoch sequences): does one poisoned element</li>
+</ul>
+<p>halt the entire chain?</p>
+<ul>
+<li>Onchain: does the verifier path check the exit code / success flag? Are loops over proof-supplied</li>
+</ul>
+<p>arrays (journal length, update lists) bounded, and who bounds them?</p>
+<ul>
+<li>Prover-side DoS belongs to the same family: a guest or ELF that inflates proving time/memory</li>
+</ul>
+<p>(see class 1&#x27;s <code>ecall_sha</code> example) is a cost attack on proving services.</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/povw/hexens-250827.pdf">Hexens — Boundless PoVW audit (Aug 2025)</a> —</li>
+</ul>
+<p>RISC6-3 (High): division-by-zero panic in <code>mint-calculator</code> guest blocks the epoch&#x27;s proof chain; RISC6-4 (High): unbounded loop over the journal <code>updates</code> array in <code>PovwMint.mint</code> enables gas-limit DoS of epoch payouts.</p>
+<ul>
+<li><a href="https://code4rena.com/reports/2025-09-succinct">Code4rena — Succinct audit (Sep 2025)</a> —</li>
+</ul>
+<p>truncated <code>public_values</code> causing panics/DoS; <code>.unwrap()</code>-based DoS in the PLONK verifier path.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/hexens_zkVM_20231031.pdf">Hexens — RISC Zero zkVM audit (Oct 2023)</a> —</li>
+</ul>
+<p>RSC0-3: <code>ecall_sha</code> invoked directly from assembly skips the block-count check; <code>count=10000</code> inflates memory by 130GB+, a one-shot DoS against proving services.</p>
+<ul>
+<li><a href="https://sigmaprime.io/blog/sp1-zkvm-security-guide/">Sigma Prime — SP1 and zkVMs: A Security Auditor&#x27;s Guide</a> —</li>
+</ul>
+<p>panic discipline: in the guest a panic is a security property of the program, in the host a liveness bug; both sides must be reviewed.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>

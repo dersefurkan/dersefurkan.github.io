@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. Precompile boundary mismatch — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-zk">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li>
+<li><a href="/web/">Web</a></li>
+<li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li>
+<li><a href="/tests/">Tests</a></li>
+<li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/zk/">zk</a></p>
+<h1 class="page-title">5. Precompile boundary mismatch</h1>
+<p><strong>Description.</strong> zkVM precompiles (SHA-256, keccak, bigint, elliptic-curve ops, uint256) are circuits the guest invokes via syscall. A boundary mismatch exists when the precompile *accepts* a wider input range than its circuit *constrains*: the classic division gadget that enforces <code>numer = quot*denom + rem</code> but forgets <code>rem &lt; denom</code>, sign-correction terms that are one modulus short in EC arithmetic, or missing modular reduction in uint256 operations.</p>
+<p><strong>Why it matters.</strong> Every guest that calls the precompile inherits the gap: a malicious prover can satisfy the constraints with quotient/remainder (or curve-operation) witnesses that do not correspond to the real computation, and the guest&#x27;s downstream logic — signatures, hashes, financial math — is then &quot;proven&quot; on wrong values. Because precompiles are marketed as safe building blocks, application auditors routinely skip them; the boundary contract is exactly where they should look.</p>
+<p><strong>Detection hints.</strong></p>
+<ul>
+<li>For every &quot;guess the answer, then multiply-check&quot; gadget ask two questions: is there a bound on</li>
+</ul>
+<p>the remainder/result (<code>rem &lt; denom</code>, canonical range)? What happens in the <code>denom = 0</code> arm — is it separately constrained?</p>
+<ul>
+<li>In bigint/ECC precompiles, trace every expression feeding a nondeterministic quotient/remainder</li>
+</ul>
+<p>op: can the expression go negative in the worst case, and is the added correction term (how many multiples of the prime) sufficient?</p>
+<ul>
+<li>Diff the *documented* safe-usage domain against the *constrained* domain — the vendor&#x27;s own</li>
+</ul>
+<p>precompile-usage documentation is the spec to diff against.</p>
+<ul>
+<li>Edge-case test set per precompile: <code>0</code>, <code>1</code>, <code>-1</code> (signed), <code>p-1</code>, <code>p</code>, <code>2^256-1</code>, and aliasing</li>
+</ul>
+<p>inputs (<code>x_ptr == y_ptr</code>, unaligned pointers).</p>
+<p><strong>Public references.</strong></p>
+<ul>
+<li><a href="https://docs.succinct.xyz/docs/sp1/security/safe-precompile-usage">SP1 — Safe Usage of SP1 Precompiles</a> —</li>
+</ul>
+<p>the vendor&#x27;s own boundary contract for precompile inputs.</p>
+<ul>
+<li><a href="https://github.com/advisories/GHSA-f6rc-24x4-ppxp">GHSA-f6rc-24x4-ppxp / CVE-2025-54873</a> —</li>
+</ul>
+<p>signed division underconstrained; division-by-zero results underconstrained.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/zkVM/veridise_zkVM_20250224.pdf">Veridise — RISC Zero zkVM Round 2</a> —</li>
+</ul>
+<p>V-RISC0-VUL-003 (Critical): <code>DoDiv</code> constrains <code>numer = quot*denom + rem</code> but omits <code>rem &lt; denom</code>; two valid <code>(quot, rem)</code> pairs exist for <code>numer=2, denom=1</code>.</p>
+<ul>
+<li><a href="https://github.com/risc0/rz-security/blob/main/audits/precompiles/veridise_bigint2_240324.pdf">Veridise — BigInt2 precompile audit</a> —</li>
+</ul>
+<p>V-RISC0_R2-VUL-002: positivity correction for nondeterministic quot/rem ops added <code>prime</code> where <code>prime*prime</code> was required.</p>
+<ul>
+<li><a href="https://github.com/succinctlabs/sp1/blob/main/audits/cantina.pdf">Cantina — SP1 competition audit</a></li>
+</ul>
+<p>and <a href="https://github.com/succinctlabs/sp1/blob/main/audits/kalos.md">KALOS — SP1 Recursion VM audit</a> — uint256 precompile underconstrained (missing mod reduction; <code>x_ptr == y_ptr</code> aliasing); recursion ALU division allowed <code>0/0</code> to produce arbitrary results.</p>
+<p class="sub"><a href="/zk/">All zk classes</a> · <a href="/">Shop</a></p>
+</main></body></html>
