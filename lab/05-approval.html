@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approval the agent can call is not a human gate — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-test">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li><li><a href="/web/">Web</a></li><li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li><li><a href="/lab/">Lab</a></li><li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/lab/">Lab</a></p>
+<h1 class="page-title">Approval the agent can call is not a human gate</h1>
+<p>Local lab only (<code>mcp_lab.py</code>, week-2 runs). Tools: <code>read_doc</code>, <code>request_approval</code>, <code>write_doc</code>. No session, transport, or auth header.</p>
+<p><code>request_approval</code> takes only an <code>action</code> string. Its description is not a gate. <code>caller</code> is checked only in <code>read_doc</code> and <code>search</code>. Approval and write ignore the caller. If that tool is on the agent’s list, the same party asks and grants.</p>
+<p>Pending only when a person is required and has not granted: <code>human_required</code> on, <code>human_ok</code> off. The call returns <code>&quot;pending&quot;</code> and mints nothing. No write, <code>written</code> null, no file. <code>human_ok</code> is a <code>Lab</code> field. No tool sets it.</p>
+<p>Otherwise the lab binds a secret to the model’s <code>action</code> and returns it. With <code>enforce_approval</code>, <code>write_doc</code> writes only if that binding matches <code>tenant:name</code>, then deletes it. A mismatch is <code>&quot;denied&quot;</code>. Dirty run: the user said to follow the document. Sequence: <code>read_doc</code>, <code>request_approval</code>, <code>write_doc</code>. Result: <code>&quot;written&quot;</code>. No person. The system line was followed, not enforced. The clean run, writes forbidden, stopped at <code>read_doc</code>.</p>
+<p><code>&quot;pending&quot;</code> is not an error. <code>isError</code> is true only for <code>&quot;denied&quot;</code>. A tool return stays role <code>tool</code>. Approval is a state the agent cannot produce.</p>
+<p class="sub">Local teaching result. Not a client finding. No secret and no attack text. <a href="/lab/">All lab notes</a></p>
+</main></body></html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unpinned resolver uses string order — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body class="tone-test">
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/zk/">zk</a></li><li><a href="/web/">Web</a></li><li><a href="/web3/">Web3</a></li>
+<li><a href="/agent/">Agents</a></li><li><a href="/lab/">Lab</a></li><li><a href="/info/">Info</a></li>
+</ul></nav>
+<a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
+</div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/lab/">Lab</a></p>
+<h1 class="page-title">Unpinned resolver uses string order</h1>
+<p>Date: 2026-11-14. Source: <code>repos/damn-vulnerable-MCP-server/challenges/supply_chain/challenge15/server.py</code>, clone <code>cdc4c6b</code>. Local lab, not production. Not run: server not started, port not opened, resolver not called.</p>
+<p><code>_resolve_package</code> reads only in-process internal and public maps. Registry addresses are text. No client.</p>
+<p>Exact <code>internal</code> returns the internal entry and ignores version. Exact <code>public</code> returns the public entry and ignores the requested version. Else, if version is not <code>latest</code>, an equal internal version string wins first, then an equal public string. If neither matches and <code>prefer_highest_version</code> is true and the name is in both maps, the greater version string (<code>&gt;</code>) wins. <code>latest</code> and an unknown version take that branch and are not rejected. If that branch is skipped, internal is used when present, otherwise public.</p>
+<p>When unpinned, highest version is string comparison, not semver. Here the public strings sort above the internal ones, so unpinned names select public. An explicit internal version still selects internal first.</p>
+<p><code>fallback_to_public</code> is printed in config and notes but is not read. <code>registries</code> is not walked. No package bodies or keys.</p>
+<p class="sub">Local teaching result. Not a client finding. No secret and no attack text. <a href="/lab/">All lab notes</a></p>
+</main></body></html>
