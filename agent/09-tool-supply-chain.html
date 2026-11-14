@@ -60,7 +60,12 @@
 <li><a href="https://owasp.org/Top10/2021/A08_2021-Software_and_Data_Integrity_Failures/">OWASP Top 10 2021 — A08 Software and Data Integrity Failures</a></li>
 <li><a href="https://atlas.mitre.org/">MITRE ATLAS</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A tool allowed by name can later change its description, schema, or package. The host still loads it. The log still shows the old name, so Monday&#x27;s review is not the tool that runs on Friday.</p>
+<p><strong>Detection hint.</strong> Store a digest of the description, the schema, and the package at allow time. On each start, recompute it and refuse the tool until a person allows it again if the digest differs.</p>
+<p><strong>Test.</strong> Record the schema hash. Change one word of the description in the fixture registry. Restart the host. Assert the tool is not callable until the allow step.</p>
+<p><strong>Opened.</strong> https://top10.owasp.org/2021/A08_2021-Software_and_Data_Integrity_Failures — OWASP A08 says to verify software and data with a signature or similar check so a plugin or update is from the expected source and has not been altered.</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

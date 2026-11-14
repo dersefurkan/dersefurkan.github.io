@@ -59,7 +59,12 @@
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">OWASP Authentication Cheat Sheet</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html">OWASP Forgot Password Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A session, a password reset, or a second factor is accepted for the wrong person, or stays valid forever. Weak-password guessing is the noisy case. The quiet case is a reset that signs in whoever opens it, or a session that still works after logout and after a password change.</p>
+<p>Later checks trust the subject this step produced. A wrong subject makes access-control tests meaningless.</p>
+<p><strong>Detection hint.</strong> Before: a reset was issued for account A. Action: open that link as B, or after the product&#x27;s own expiry. Assert: B is not in A&#x27;s session, and a second use fails.</p>
+<p><strong>Public URL:</strong> https://top10.owasp.org/2021/A07_2021-Identification_and_Authentication_Failures</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

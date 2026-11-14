@@ -59,7 +59,12 @@
 <li><a href="https://owasp.org/Top10/2021/A05_2021-Security_Misconfiguration/">OWASP Top 10 2021 — A05 Security Misconfiguration</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Configuration_Cheat_Sheet.html">OWASP Configuration Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A fresh install can ship open: a default account, a debug route, a stack trace, a storage bucket that lists, or CORS <code>*</code>. A feature flag a test turned on does not count. The product&#x27;s own default does.</p>
+<p>No business-logic bug is required. The setup the documentation shipped is enough. OWASP A05:2021 records a 4.51% average incidence and over 208k CWE occurrences, including CWE-16 (configuration).</p>
+<p><strong>Detection hint.</strong> On the documented default, compare response headers to a hardened baseline. Missing security directives (for example HSTS or a restrictive Content-Security-Policy), or a session cookie without <code>Secure</code> and <code>HttpOnly</code>, is this class. Do not change the config to force a pass.</p>
+<p><strong>Public URL opened:</strong> https://top10.owasp.org/2021/A05_2021-Security_Misconfiguration/</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

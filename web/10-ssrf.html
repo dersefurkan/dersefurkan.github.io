@@ -61,7 +61,13 @@
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP Server Side Request Forgery Prevention Cheat Sheet</a></li>
 <li><a href="https://portswigger.net/web-security/ssrf">PortSwigger — SSRF</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>The server fetches a caller-chosen URL, host, or webhook. A metadata address, an internal admin port, or a file URL is the effect. A displayed URL is not this class. The caller is outside that network; the fetch wears the server&#x27;s address.</p>
+<p>Detection: list every scoped feature that takes a URL or hostname and connects. The allowlist is the server&#x27;s, applied after redirects, not a prefix the caller can shape. A redirect to a second host belongs in the same test. A host outside scope yields no outbound request; confirm that on a permitted sink or in the deny log.</p>
+<p>Deny the request when two parsers disagree on the host of one URL string. Rebuild from the matched allowlist entry; do not copy the caller&#x27;s URL.</p>
+<p>Test one in-scope host (one fetch) and one out-of-scope host (no fetch, no stored effect).</p>
+<p>Opened: https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

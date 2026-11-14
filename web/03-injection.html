@@ -61,7 +61,13 @@
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">OWASP SQL Injection Prevention Cheat Sheet</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html">OWASP OS Command Injection Defense Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>Injection means a parser treats data as a query, command, path, or template. The parser is the class, not one character. Concatenating after an allowlist has not left the class.</p>
+<p>Harm is a second statement, file, or template under the server&#x27;s authority. A string only in a log is not that effect.</p>
+<p>Find every build of a query, path, or command. Data must be a bound parameter or a path segment inside a root. Stripping one character, then concatenating, is still concatenation. Text with a quote, brace, or separator must return unchanged: one row, no file outside the root. A plain value on the same flow is the negative control; both must use the bound path.</p>
+<p>Added detection hint: also check ORM calls and stored procedures. A wrapper that still concatenates inside the procedure, or takes a table or column name from the request, stays in this class.</p>
+<p>Public page opened: https://owasp.org/Top10/2021/A03_2021-Injection/</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

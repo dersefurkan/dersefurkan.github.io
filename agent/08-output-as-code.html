@@ -59,7 +59,11 @@
 <li><a href="https://owasp.org/Top10/2021/A03_2021-Injection/">OWASP Top 10 2021 — A03 Injection</a></li>
 <li><a href="https://portswigger.net/web-security/llm-attacks">PortSwigger — Web LLM attacks</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>The model is a data source. Its text becomes a bug when the app pastes a completion into HTML, a shell, SQL, a template, a file path, or any file another program will run. The next parser is the defect, the same way an unencoded comment becomes a query. Encoding for one context does not make another safe. A model refusal is irrelevant if the application still executes the text.</p>
+<p>Detection hint: map every completion to its sink and require the encode step to match that sink. A stored fixture answer must remain data: the page shows it as text, no child process starts, and no second query runs.</p>
+<p>Opened: https://genai.owasp.org/llmrisk/llm05:2025-improper-output-handling/ (OWASP LLM05:2025 Improper Output Handling). That page says model output needs validation and context-aware encoding before it is passed downstream. Missing encoding for HTML, JavaScript, or SQL raises the impact.</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

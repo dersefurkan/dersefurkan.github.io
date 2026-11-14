@@ -58,7 +58,11 @@
 <li><a href="https://owasp.org/Top10/2021/A09_2021-Security_Logging_and_Monitoring_Failures/">OWASP Top 10 2021 — A09 Security Logging and Monitoring Failures</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">OWASP Logging Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A sensitive action can succeed while the server log never records who did it, which object changed, and whether it worked. The other failure puts a password, session, or card number in the log, so anyone who can read logs learns the secret. Silence hides the event; a secret in the log publishes it. Showing the state change is not enough if the next operator stays blind. A log that exists only when a debug flag is on is not the default.</p>
+<p><strong>Detection hint.</strong> Fail one login with a known password, then read the server auth log, not the browser console. The failure must be present, and a search of that line for the submitted password must find nothing.</p>
+<p><strong>Public URL.</strong> https://top10.owasp.org/2021/A09_2021-Security_Logging_and_Monitoring_Failures/</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

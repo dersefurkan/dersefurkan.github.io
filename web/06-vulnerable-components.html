@@ -58,7 +58,13 @@
 <li><a href="https://owasp.org/Top10/2021/A06_2021-Vulnerable_and_Outdated_Components/">OWASP Top 10 2021 — A06 Vulnerable and Outdated Components</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html">OWASP Vulnerability Disclosure Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A lockfile pin with a known fix is a finding only when a scoped flow calls that code. A version banner is a lead. The finding is the call path. CVEs the flow never reaches stay &quot;present, not on this path.&quot;</p>
+<p>Read the lockfile, not the marketing version. For each in-scope dependency, find one call from the flow under test. If the vendor fix is a config flag, check its default. The running process must load the version the lockfile names.</p>
+<p>Added detection hint: inventory nested and client-side packages as well. An unmaintained third-party component (CWE-1104) still matters when no CVE is mapped; leave it off the finding list unless the scoped flow imports it.</p>
+<p>Example test: print the resolved version from the lockfile and from the running app and assert they match. If a scoped flow calls a function the advisory names, say so and stop.</p>
+<p>Public URL opened: https://top10.owasp.org/2021/A06_2021-Vulnerable_and_Outdated_Components</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

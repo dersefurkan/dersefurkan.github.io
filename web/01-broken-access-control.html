@@ -63,7 +63,20 @@
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
 <li><a href="https://portswigger.net/web-security/access-control">PortSwigger — Access control</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>The server acts for a caller who does not own the object and lacks the required role. Hiding a button is not a control. Trusting a client-sent id, role, or tenant is not a check.</p>
+<p>OWASP ranks this class first. Harm is another person&#x27;s record, file, or invoice.</p>
+<p>Detection hints:</p>
+<ul>
+<li>Repeat the request as a second product user, not a test backdoor.</li>
+<li>Compare the session subject to the owner or role. Matching only the query id is not a check.</li>
+<li>Horizontal and vertical cases use the same test with a different second identity.</li>
+<li>B&#x27;s request must not change A&#x27;s object or return A&#x27;s secret fields.</li>
+<li>No session must be denied on GET, POST, PUT, and DELETE. A write after a blocked read is still this class.</li>
+</ul>
+<p>Example: A owns invoice 1. B requests it. Expect denial and unchanged amount, status, and owner.</p>
+<p>Public URL: https://top10.owasp.org/2021/A01_2021-Broken_Access_Control</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

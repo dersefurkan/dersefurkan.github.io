@@ -62,7 +62,14 @@
 <li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
 <li><a href="https://atlas.mitre.org/">MITRE ATLAS</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p><code>initialize</code> can succeed while a tool or resource ignores the caller. A private body with no <code>Authorization</code> and no session subject is exposed. &quot;Do not call this&quot; is not a check.</p>
+<p>The model is one client. Another can call <code>resources/read</code> or <code>tools/call</code>. Persuading the model is weaker than a direct protocol read.</p>
+<p><strong>Detection.</strong> Note protocol version, session id, and any credential. Read each private URI with no credential. Report status and length, not bytes. If the agent skips the URI, say so; that does not close the direct read. No caller check fails even if every model refused.</p>
+<p><strong>Added hint.</strong> The 2025-06-18 spec says the protocol does not enforce access control, and tool annotations are untrusted. From a second JSON-RPC client, <code>resources/read</code> with no <code>Authorization</code>. A 200 and a non-empty body is a fail.</p>
+<p><strong>Test.</strong> No authorization header. Expect denial. Do not paste the body.</p>
+<p>Opened: https://modelcontextprotocol.io/specification/2025-06-18</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

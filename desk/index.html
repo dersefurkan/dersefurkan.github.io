@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desk — Derse</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head><body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/"><span class="mark"></span><span class="brand-name">Derse</span><span class="brand-meta">security review</span></a>
+<nav class="nav" aria-label="Primary"><ul>
+<li><a href="/web/">Web</a></li><li><a href="/agent/">Agents</a></li><li><a href="/#contact">Contact</a></li>
+</ul></nav></div></header>
+<main id="content" class="wrap section prose">
+<p class="kicker"><a href="/">Shop</a></p>
+<h1 class="page-title">How to read this shop</h1>
+<h2>Reading order</h2>
+<p>Start at https://dersefurkan.github.io. Read the home page once, top to bottom: offer, three doors, deliverable, five-day method, class map, samples, and scope. That map is only an index.</p>
+<p>Next, https://dersefurkan.github.io/web/. Read pages 01 through 10 in the order on that index. Each page is one class, a detection hint, and a public source. A flow the written scope does not name stays out of the pack.</p>
+<p>Then https://dersefurkan.github.io/agent/. Read pages 01 through 10 in the order on that index. The proof named there is the tool log and the record after the call.</p>
+<p>Last, clone the Foundry samples and run <code>forge test</code>, in this order:</p>
+<p>1. https://github.com/dersefurkan/split-ledger-vault-demo 2. https://github.com/dersefurkan/pool-invariant-suite-demo 3. https://github.com/dersefurkan/risc0-onchain-verify-demo</p>
+<p>These are teaching repos. A green default suite is the bound path on those samples, not a finding against a live product.</p><h2>What to email before a review</h2>
+<p>The written scope is the whole job. The review does not add a host, a role, or an action that this email does not name. Send four items in one note.</p>
+<p><strong>One surface.</strong> Name a single app, API, contract family, or agent. A second product is a separate engagement.</p>
+<p><strong>Staging URL or repo.</strong> Give a staging address you own, or the repository. Do not point the review at production, and do not attach live customer records.</p>
+<p><strong>Role.</strong> Name one account the product already provides, and what that role may do.</p>
+<p><strong>Out-of-scope list.</strong> List hosts, vendors, third parties, and actions you forbid. Production changes and anything absent from the note stay outside.</p>
+<p>Work starts only after this note is confirmed. A later message does not widen it.</p><h2>What the five tools measure</h2>
+<p>No payloads. A connectivity score is not a finding. A ping, blank-probe text, or a string match only shows the endpoint answered.</p>
+<p><strong>promptfoo</strong> reruns one config as an eval of prompts and models. Red team is a separate plugin id that names a risk class.</p>
+<p><strong>garak</strong> pairs probes with detectors and measures unwanted model output, not tool effects. Attack success is that probe’s detector rate, not a finding.</p>
+<p><strong>AgentDojo</strong> scores utility and security in its own fake suites and does not call customer tools. Utility is task success. Security true means the suite target held. Utility with no injection is not resistance.</p>
+<p><strong>Inspect</strong> is a task, solver, and scorer. It scores the written evaluation and does not replace AgentDojo’s environment control.</p>
+<p><strong>DeepTeam</strong> scores named vulnerability classes with a judge and separately scans source. A scan is not a live chat test. A model sentence or a missing judge score is not a finding.</p><h2>X-04: Proof</h2>
+<p>Proof is the state after the action. Read the ledger, row, file, role, or log once the call returns. Unchanged means the action did not land. Changed means you name the subject and the object that moved.</p>
+<p>The model&#x27;s sentence is not proof. A refusal can hide a write, and a confident reply can describe a write that never happened. A scanner percent is not proof. Confidence is not a before-and-after diff.</p>
+<p>Trap: a true boolean can be an early return. The flag may leave before the later check or write. Treat true as &quot;this branch exited&quot; until the next step runs, or until the stored state stays the same. Do not score the boolean itself.</p><h2>X-05 Staging</h2>
+<p>Run checks only on staging, with one role: the single test account issued for this shop. Do not switch accounts, share the session, or raise privileges.</p>
+<p>Use only named flows. Each flow has a written name, a start state, and an expected end state, such as sign-in, cart, checkout, or order status. An unnamed path is out of scope.</p>
+<p>Do not run destructive tests on production. No deletes, captures, inventory edits, password changes, or writes to live customer data.</p>
+<p>Do not use public vendor chat. Keep notes in the private program channel. Do not post questions, screenshots, or steps on forums, social sites, or open tickets.</p>
+<p>Stop if the host is production, the role is shared, or the flow has no name.</p><h2>Three Foundry teaching repos</h2>
+<p>From https://dersefurkan.github.io. Teaching code, not live findings. Run <code>forge test</code> (no RPC, no keys). Counts are from that page.</p>
+<p><strong>split-ledger-vault-demo</strong> — A deposit hits shares and a receipt; each exit burns one ledger. Broken: 100 in, 200 out. Bound: 40 via shares leaves 60 on the receipt; the other depositor is paid in full. Default: 19 passed, 1 gated suite skipped. https://github.com/dersefurkan/split-ledger-vault-demo</p>
+<p><strong>pool-invariant-suite-demo</strong> — Handler invariants on share math. A donation must not move price; the fee is on gain, not principal. Inflation and fee-creep are killed on the fixed contracts. Default: 24 passed, 3 skipped. Fork and killed suites stay opt-in. https://github.com/dersefurkan/pool-invariant-suite-demo</p>
+<p><strong>risc0-onchain-verify-demo</strong> — Rust guest, committed Groth16 receipt, Solidity verifier. A tampered journal and a wrong image id revert. The raw verifier can take the same seal twice; the gate nullifies the digest and pays once. Journal: 24 bytes, no chain id. Default: 12 passed. On-chain: <code>cd onchain-verify &amp;&amp; forge test</code>. https://github.com/dersefurkan/risc0-onchain-verify-demo</p><h2>zkVM notes beside the web and agent shelves</h2>
+<p>Web shelf: the HTTP session. Agent shelf: the tool log. <a href="https://github.com/dersefurkan/zkvm-guest-bug-notes">zkvm-guest-bug-notes</a> sits beside them, not inside either. It lists twelve classes at the guest and the on-chain verifier: host input the guest does not re-check, a journal that omits application context, a missing program-key allowlist, replay without domain separation, an ELF that no longer matches the pinned key, and wrapper public inputs.</p>
+<p>Circuit and proof-system bugs stay in <a href="https://github.com/0xPARC/zk-bug-tracker">0xPARC zk-bug-tracker</a>, <a href="https://github.com/zksecurity/zkbugs">zksecurity/zkbugs</a>, and <a href="https://www.zkdocs.com/">ZKDocs</a>. Core-VM soundness is out of scope unless a guest or integrator must change.</p>
+<p>Same card as the new shelves: one class, a detection hint, public sources only. No undisclosed bugs. Web and agent tests skip this layer. Review one guest plus its verifier against the twelve. Web: <a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>. Agent: <a href="https://genai.owasp.org/llm-top-10/">OWASP LLM Top 10</a>.</p><h2>Not published</h2>
+<p>This shop does not publish jailbreak corpora, live bounty writeups, secrets, or vendor API attacks.</p>
+<p>Those four classes stay off the page. They are not quoted, reconstructed, summarized as procedures, or used as worked examples. A request for any of them is outside what this shop will put in a note.</p>
+<p>Other security writing may remain only when it does not rely on those classes.</p><h2>14-day re-run</h2>
+<p>The 14-day re-run is the same tests, after the client&#x27;s patch. It is included. There is no second invoice.</p>
+<p>A green re-run means those properties held. It is not a new audit.</p><h2>Gap: a findings blog versus this shop</h2>
+<p>A research blog in the samczsun.com style is two public shelves at once. Writing is the war stories: posts the author may sign. Findings is a personal hall of fame: named, already disclosed results, with dates, sitting beside the prose. Credit is visible because those results were published.</p>
+<p>This shop still does not have that second shelf. There is no personal finding hall of fame. Unpublished client work stays private, so a named win cannot be posted without breaking that privacy. Filling the blank with invented trophies would be fake. None are listed here.</p>
+<p>The substitute is the shelf of class pages. Each page names a class and how to recognize it. That is public teaching, not a score of private jobs. A reader can judge the method. Silence about clients is not a hidden trophy case.</p>
+<p class="sub"><a href="/">Back to the shop</a></p>
+</main></body></html>

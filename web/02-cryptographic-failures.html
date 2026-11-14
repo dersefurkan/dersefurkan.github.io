@@ -61,7 +61,11 @@
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">OWASP Cryptographic Storage Cheat Sheet</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">OWASP Password Storage Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A secret fails this class when another party can read it as stored or sent. The password may sit in the row as itself, the session cookie may lack a secure flag, the backup may be the database file, or a token may land in a logged query string. A sound cipher does not help if the value was never protected.</p>
+<p><strong>Detection hint.</strong> Flag a password column that uses MD5, SHA-1, or any unsalted fast hash. OWASP A02 expects an adaptive salted function such as Argon2, scrypt, bcrypt, or PBKDF2.</p>
+<p><strong>Public reference.</strong> https://top10.owasp.org/2021/A02_2021-Cryptographic_Failures</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

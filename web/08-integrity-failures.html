@@ -58,7 +58,19 @@
 <li><a href="https://owasp.org/Top10/2021/A08_2021-Software_and_Data_Integrity_Failures/">OWASP Top 10 2021 — A08 Software and Data Integrity Failures</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html">OWASP Deserialization Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>The app trusts an update, a plugin, a deserialized blob, or a webhook body because it arrived, not because a check passed. The signature is missing, optional, or compared to a key the sender also sent.</p>
+<p>The next deploy or webhook then runs as the app. Passing the app&#x27;s own CI tests does not prove a blob the pipeline did not build is intact.</p>
+<p>Detection:</p>
+<ul>
+<li>Before any webhook or update side effect, confirm a check actually runs.</li>
+<li>A check skipped by omitting the signature header is not a check.</li>
+<li>The verification key must not travel in the same request as the blob.</li>
+<li>A missing signature or a changed byte must leave stored state unchanged.</li>
+<li>Also review auto-update, plugin, and CI artifact loads for a required signature or hash before apply (CWE-494).</li>
+</ul>
+<p>Opened: https://top10.owasp.org/2021/A08_2021-Software_and_Data_Integrity_Failures/</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

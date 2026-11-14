@@ -60,7 +60,11 @@
 <li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM Applications</a></li>
 <li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>A search can return another tenant&#x27;s document when the filter is missing, applied only after the model has seen the text, or set by the model. An ordinary question then puts someone else&#x27;s record in context. A later tool can quote it. The leak is the retrieval, not the spoken paragraph.</p>
+<p><strong>Detection hint.</strong> Log the vector query before ranking. Caller A, needle only in B, product default filter on: the query must carry A&#x27;s tenant predicate, and the hit list must be empty. Do not treat a refusal sentence as a pass. Run the filter off only as a labeled control that the fixture is real. A hit in that run is not a default-install finding.</p>
+<p>OWASP LLM08:2025 describes the same shared vector-store leak: https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>

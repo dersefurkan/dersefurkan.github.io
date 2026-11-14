@@ -58,7 +58,12 @@
 <li><a href="https://owasp.org/Top10/2021/A04_2021-Insecure_Design/">OWASP Top 10 2021 — A04 Insecure Design</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Abuse_Case_Cheat_Sheet.html">OWASP Abuse Case Cheat Sheet</a></li>
 </ul>
-    <p class="sub"><a href="/">Back to the shop</a></p>
+    <section class="field"><h2>Field note</h2>
+<p>Insecure design is a missing or ineffective control, not an implementation typo. The steps match the specification, but the specification lets the wrong party or the wrong order move value: a refund before payment, a shipment before capture, or a limit the client supplies. Escaping output does not fix it. The state machine is the control.</p>
+<p><strong>Detection hint.</strong> Write the legal checkout order as server-owned states (priced, paid, captured, shipped). Flag a transition the server accepts when a required prior state, or a required agreement, is not stored on the server. A quantity, price, or reset counter sent by the client is the client&#x27;s number, not a limit. The illegal order must not change the ledger, the shipment, or the role.</p>
+<p>OWASP Top 10:2021 A04 separates this from insecure implementation. A correct implementation cannot add controls that were never designed. Threat modeling of business flows belongs in the design.</p>
+<p>Public URL opened: https://top10.owasp.org/2021/A04_2021-Insecure_Design</p></section>
+<p class="sub"><a href="/">Back to the shop</a></p>
   </main>
   
 <script>
