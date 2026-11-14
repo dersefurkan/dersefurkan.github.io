@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DVLA tool authority — Derse</title>
+<title>garak — Derse</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
@@ -15,12 +15,7 @@
 </ul></nav>
 <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
 </div></header>
-<main id="content" class="wrap section prose">
-<p class="kicker"><a href="/lab/">Lab</a></p>
-<h1 class="page-title">DVLA tool authority</h1>
-<p><code>GetCurrentUser</code> ignores the caller. Every call returns user 1. There is no session token. Its text treats that fixed return as the current user.</p>
+<main id="content" class="wrap section prose"><p class="kicker"><a href="/lab/">Lab</a></p><h1 class="page-title">DVLA tool authority</h1><p><code>GetCurrentUser</code> ignores the caller. Every call returns user 1. There is no session token. Its text treats that fixed return as the current user.</p>
 <p><code>GetUserTransactions</code> takes a <code>userId</code> and passes it through. It does not compare the argument with the caller or with user 1. There is no allowlist. The subject is the supplied argument. The database helper has the same gap. Query text and hidden fields are omitted.</p>
 <p><code>main.py</code> registers both tools with no feature flag. The system prompt says to use only the current-user id and refuse others. That sentence is not in the tool. <code>AgentExecutor</code> does not ask before a call. <code>max_iterations</code> only caps the loop.</p>
-<p>The week-1 log is a function return, not a model sentence. User 1 and user 2 returned different rows. The model did not choose the tools. Streamlit stayed closed, and this note did not rerun the turn. One direct call is not a full agent flow. This is lab code, not a customer default, so no customer severity is assigned. No passwords. No flags.</p>
-<p class="sub">Local teaching result. Not a client finding. No secret and no attack text. <a href="/lab/">All lab notes</a></p>
-</main></body></html>
+<p>The week-1 log is a function return, not a model sentence. User 1 and user 2 returned different rows. The model did not choose the tools. Streamlit stayed closed, and this note did not rerun the turn. One direct call is not a full agent flow. This is lab code, not a customer default, so no customer severity is assigned. No passwords. No flags.</p><p class="sub">Local teaching result. Not a client finding. <a href="/lab/">All lab notes</a></p></main></body></html>

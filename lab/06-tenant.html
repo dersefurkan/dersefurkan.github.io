@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tenant filter — Derse</title>
+<title>garak — Derse</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
@@ -15,15 +15,10 @@
 </ul></nav>
 <a class="btn primary" href="mailto:dersefurkan32@gmail.com?subject=Review%20pack">Send the surface</a>
 </div></header>
-<main id="content" class="wrap section prose">
-<p class="kicker"><a href="/lab/">Lab</a></p>
-<h1 class="page-title">Tenant filter</h1>
-<p>Local lab. Two search runs only. The caller is tenant A. The needle is in the other tenant’s document, not in A’s. The server skips a row whose tenant is not the caller. That check is not a request to the model.</p>
+<main id="content" class="wrap section prose"><p class="kicker"><a href="/lab/">Lab</a></p><h1 class="page-title">Tenant filter</h1><p>Local lab. Two search runs only. The caller is tenant A. The needle is in the other tenant’s document, not in A’s. The server skips a row whose tenant is not the caller. That check is not a request to the model.</p>
 <p>Default is on. <code>enforce_tenant</code> starts true.</p>
 <p>Filter on: no leak. The hit list is empty and leaked is false. A does not see B.</p>
 <p>Filter off: one hit in the other tenant. The hit is tenant B, name secret, and leaked is true. That setting is not the default.</p>
 <p>The retrieved document body is not copied here. It stays stored data. It is not an instruction and not a tool call.</p>
 <p>Search is a case-insensitive substring over seeded rows. It is not an embedding retriever. This run has no top-k, cosine score, rerank, or model answer. Academic attack rates do not apply.</p>
-<p>The tenant gate blocks another tenant’s row. It does not block poison written into the caller’s own corpus.</p>
-<p class="sub">Local teaching result. Not a client finding. No secret and no attack text. <a href="/lab/">All lab notes</a></p>
-</main></body></html>
+<p>The tenant gate blocks another tenant’s row. It does not block poison written into the caller’s own corpus.</p><p class="sub">Local teaching result. Not a client finding. <a href="/lab/">All lab notes</a></p></main></body></html>
