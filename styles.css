@@ -301,6 +301,11 @@ code {
 }
 .days h3 { font-size: 28px; }
 
+.catalog { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 8px; }
+.catalog ol { list-style: none; margin: 12px 0 0; padding: 0; }
+.catalog li { border-top: 1px solid var(--line); }
+.catalog a { display: block; padding: 14px 0; }
+.catalog a:hover { color: var(--accent); }
 .classes { display: grid; gap: 0; }
 .classes article { padding: 32px 0; display: grid; grid-template-columns: 140px 1fr; gap: 24px; }
 .classes article:last-child { border-bottom: 1px solid var(--line); }
@@ -475,7 +480,7 @@ code {
     background: transparent;
   }
   .menu a { font-size: 16px; line-height: 1.2; color: var(--muted); padding: 5px 0; }
-  .hero, .strip-grid, .ticks, .days, .classes article, .study, .scope, .after, .footer-grid {
+  .hero, .strip-grid, .ticks, .days, .classes article, .catalog, .study, .scope, .after, .footer-grid {
     grid-template-columns: 1fr;
   }
   .strip-grid div + div, .days li + li, .ticks li:nth-child(even), .scope > div + div, .after article + article {
